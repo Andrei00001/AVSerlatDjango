@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <a href="http://127.0.0.1:8000/"> Главная </a>
+    <a href="http://127.0.0.1:8000/logout">Выйти</a>
+    <h1>Твой профиль</h1>
+    {% if request.user.is_authenticated %}
+    <h1>{{ user.username }}</h1><h1>{{ user.last_name }}</h1><h1>{{ user.email }}</h1>
+     {% for u in users %}
+                {% if user.id == u.user_id %}
+                    {% if u.image %}<div><img src="{{ u.image.url }}" alt="" width="50px" height="50px">Меня зовут аватарка</div>{% endif %}
+                {% endif %}
+    {% endfor %}
+
+    <h1>Твой посты</h1>
+    {% for post in posts %}
+        <div style="background:#c2c05d; border: 1px solid #21DB56;">
+        {% if user.id == post.user_id %}
+             <h1>{{ post.title }}</h1>
+             <h1>{{ post.text }}</h1>
+            {% if post.image %}<div><img src="{{ post.image.url }}" alt="" width="100px" height="100px"></div>{% endif %}
+        {% endif %}
+
+
+        {% for comment in comments%}
+                    {% for p in person %}
+                        {% if p.id == comment.user_id %}
+                        <div style="padding: 10px 20px 10px 20px;background:#fdc073; border: 1px solid #CC0000;"> {{ p.username }}</div>
+                        {% endif %}
+                    {% endfor %}
+
+                   {% if post.id == comment.post_id_id%}
+                        <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #CC0000;"> {{ comment.text }}</div>
+                   {% endif %}
+
+        {% for like in likes %}
+                        {% if post.id == like.post_id%}
+                            <div > {{ like.post_id }} ХЗ как считать количество лайков</div>
+                       {% endif %}
+        {% endfor %}
+        {% endfor %}
+        </div>
+
+    {% endfor %}
+
+    {% endif %}
+
+</body>
+</html>
+
+
+
+
+
+
