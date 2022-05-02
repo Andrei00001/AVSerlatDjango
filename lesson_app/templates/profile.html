@@ -7,7 +7,9 @@
 <body>
     <a href="http://127.0.0.1:8000/"> Главная </a>
     <a href="http://127.0.0.1:8000/logout">Выйти</a>
+
     <h1>Твой профиль</h1>
+
     {% if request.user.is_authenticated %}
     <h1>{{ user.username }}</h1><h1>{{ user.last_name }}</h1><h1>{{ user.email }}</h1>
      {% for u in users %}
@@ -18,31 +20,23 @@
 
     <h1>Твой посты</h1>
     {% for post in posts %}
-        <div style="background:#c2c05d; border: 1px solid #21DB56;">
+
         {% if user.id == post.user_id %}
+        <div style="background:#c2c05d; border: 1px solid #2260e6;">
              <h1>{{ post.title }}</h1>
              <h1>{{ post.text }}</h1>
             {% if post.image %}<div><img src="{{ post.image.url }}" alt="" width="100px" height="100px"></div>{% endif %}
-        {% endif %}
-
-
-        {% for comment in comments%}
-                    {% for p in person %}
-                        {% if p.id == comment.user_id %}
-                        <div style="padding: 10px 20px 10px 20px;background:#fdc073; border: 1px solid #CC0000;"> {{ p.username }}</div>
-                        {% endif %}
-                    {% endfor %}
-
-                   {% if post.id == comment.post_id_id%}
-                        <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #CC0000;"> {{ comment.text }}</div>
-                   {% endif %}
-
-        {% for like in likes %}
-                        {% if post.id == like.post_id%}
-                            <div > {{ like.post_id }} ХЗ как считать количество лайков</div>
-                       {% endif %}
-        {% endfor %}
-        {% endfor %}
+                {% for comment in comments%}
+                    {% if comment.post_id_id == post.id%}
+                        {% for p in person %}
+                            {% if comment.user_id == p.id%}
+                             <div style="padding: 5px 0 5px 20px; background:#fdc073; border: 1px solid #d622e6;"> {{ p.username }}</div>
+                            {% endif %}
+                        {% endfor %}
+                        <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;"> {{ comment.text }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         </div>
 
     {% endfor %}

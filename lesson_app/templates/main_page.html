@@ -10,16 +10,16 @@
     <a href="http://127.0.0.1:8000/logout">Выйти</a>
     {% if request.user.is_authenticated %}
         <div>
-        {% for post in posts %}
-            <h1  style="color:#c2c05d;" >{{ post.title }} </h1>
-            {% if post.image %}<div><img src="{{ post.image.url }}" alt="" width="100px" height="100px"></div>{% endif %}
-            <div style="padding:0px 40px 10px 20px;">{{ post.text }}</div>
-                {% for comment in comments%}
-                   {% if post.id == comment.post_id_id%}
-                        <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;"> {{ comment.text }}</div>
-                   {% endif %}
-                {% endfor %}
-        {% endfor %}
+            {% for post in posts %}
+                <h1  style="color:#c2c05d;" >{{ post.title }} </h1>
+                {% if post.image %}<div><img src="{{ post.image.url }}" alt="" width="100px" height="100px"></div>{% endif %}
+                <div style="padding:0px 40px 10px 20px;">{{ post.text }}</div>
+                    {% for comment in comments%}
+                       {% if post.id == comment.post_id_id%}
+                            <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;"> {{ comment.text }}</div>
+                       {% endif %}
+                    {% endfor %}
+            {% endfor %}
         </div>
     {% else %}
     <h1 ><a href="http://127.0.0.1:8000/login">Авторизуйся</a></h1>
