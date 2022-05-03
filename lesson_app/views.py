@@ -34,12 +34,16 @@ class RegisterUser(CreateView):
 
 
 def profile_user(request):
-    person = User.objects.order_by("id").all()
+
     user_ava = Profile.objects.order_by("id").all()
-    user_post = Post.objects.order_by("id").all()
-    comment = Comments.objects.order_by("id").all()
+    user_post = Post.objects.all()
+    comment = Comments.objects.select_related("user")
+    # for i in comment:
+    #     print(i.text)
+    #     print(i.user)
+    #     print(i.post_id)
     like = Like.objects.order_by("id").all()
-    context = {"title": "Акк", "person": person, "users": user_ava, "posts": user_post, "comments": comment,
+    context = {"title": "Акк","users": user_ava, "posts": user_post, "comments": comment,
                "likes": like}
     return render(request, "profile.html", context)
 

@@ -30,11 +30,9 @@
                     <summary>Комментарии</summary>
                     {% for comment in comments%}
                         {% if comment.post_id_id == post.id%}
-                            {% for p in person %}
-                                {% if comment.user_id == p.id%}
-                                 <div style="padding: 5px 0 5px 20px; background:#fdc073; border: 1px solid #d622e6;"> {{ p.username }}</div>
-                                {% endif %}
-                            {% endfor %}
+
+                             <div style="padding: 5px 0 5px 20px; background:#fdc073; border: 1px solid #d622e6;"> {{ comment.user }}</div>
+
                             <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;"> {{ comment.text }}</div>
                         {% endif %}
                     {% endfor %}
