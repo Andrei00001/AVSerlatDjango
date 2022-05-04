@@ -37,11 +37,13 @@ def profile_user(request):
 
     user_ava = Profile.objects.order_by("id").all()
     user_post = Post.objects.all()
-    comment = Comments.objects.select_related("user")
-    # for i in comment:
-    #     print(i.text)
-    #     print(i.user)
-    #     print(i.post_id)
+    comment = Comments.objects.all()
+    # select_related("user")
+    for i in comment:
+        print(i.user)
+        print(i.post_id)
+        print(i.user_id)
+
     like = Like.objects.order_by("id").all()
     context = {"title": "Акк","users": user_ava, "posts": user_post, "comments": comment,
                "likes": like}

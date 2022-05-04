@@ -12,6 +12,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display_links = ("id",)
 
 
+
 @admin.register(Comments)
 class PostAdmin(admin.ModelAdmin):
     list_display = ("id", "created_at", "text", "post_id_id")

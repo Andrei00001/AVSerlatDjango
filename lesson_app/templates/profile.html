@@ -30,7 +30,7 @@
                     <summary>Комментарии</summary>
                     {% for comment in comments%}
                         {% if comment.post_id_id == post.id%}
-
+                                <p>{{ comment.post_id_id }}</p>
                              <div style="padding: 5px 0 5px 20px; background:#fdc073; border: 1px solid #d622e6;"> {{ comment.user }}</div>
 
                             <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;"> {{ comment.text }}</div>
