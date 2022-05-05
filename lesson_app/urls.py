@@ -19,14 +19,18 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 
-from lesson_app.views import *
+from lesson_app.views.login import LoginUser
+from lesson_app.views.logout import Logout_user
+from lesson_app.views.main_page import Main_page
+from lesson_app.views.profile import Profile_user
+from lesson_app.views.register import RegisterUser
 
 urlpatterns = [
-    path('', main_page_one, name='main_page_one'),
+    path('', Main_page.as_view(), name='main_page'),
     path('register/', RegisterUser.as_view(), name='register'),
     path('login/', LoginUser.as_view(), name='login'),
-    path('logout/', logout_user, name='logout'),
-    path('profile/', profile_user, name='profile')
+    path('logout/', Logout_user.as_view(), name='logout'),
+    path('profile/', Profile_user.as_view(), name='profile')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

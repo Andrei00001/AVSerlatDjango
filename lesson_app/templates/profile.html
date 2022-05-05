@@ -24,8 +24,9 @@
         {% if user.id == post.user_id %}
         <div style="background:#c2c05d; border: 1px solid #2260e6;">
              <h1>{{ post.title }}</h1>
-             <h1>{{ post.text }}</h1>
             {% if post.image %}<div><img src="{{ post.image.url }}" alt="" width="100px" height="100px"></div>{% endif %}
+             <p>{{ post.text }}</p>
+
                 <details>
                     <summary>Комментарии</summary>
                     {% for comment in comments%}
