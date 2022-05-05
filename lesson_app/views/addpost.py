@@ -13,19 +13,14 @@ class AddPost(View):
         return render(request, "addpost.html", context)
 
     def post(self, request):
-        # print(request.user.id)
-        ss = User.objects.get(pk=request.user.id)
-        print(ss)
-        # , initial = {"user": request.user.id}
         if request.method in ("POST", "PUT"):
             data = request.POST.copy()
-            data['user'] = ss
+            data['user'] = request.user.id
 
             form = AddPostForm(data, request.FILES)
-        # form.instance.user = ss
+
             if form.is_valid():
-                # instance = form.save(commit=False)
-                # instance.user = request.user.id
+
                 form.save()
                 return redirect("profile")
             print(form.errors)
