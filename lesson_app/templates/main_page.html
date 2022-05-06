@@ -8,19 +8,39 @@
 <body>
     <a href="http://127.0.0.1:8000/profile">Профиль</a>
     <a href="http://127.0.0.1:8000/logout">Выйти</a>
+
     {% if request.user.is_authenticated %}
-        <div>
+        {% if post.is_public != "1" %}
             {% for post in posts %}
-                <h1  style="color:#c2c05d;" >{{ post.title }} </h1>
-                {% if post.image %}<div><img src="{{ post.image.url }}" alt="" width="100px" height="100px"></div>{% endif %}
-                <div style="padding:0px 40px 10px 20px;">{{ post.text }}</div>
-                    {% for comment in comments%}
-                       {% if post.id == comment.post_id_id%}
-                            <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;"> {{ comment.text }}</div>
-                       {% endif %}
-                    {% endfor %}
+
+                <h1  style="color:#c2c05d;" >{{ post.user}} </h1>
+                <h3  style="color:#f2a05d;" >{{ post.title }}</h3>
+                {% if post.image %}<p><img src="{{ post.image.url }}" alt="" width="100px" height="100px"></p>{% endif %}
+                <p style="padding:0px 40px 0px 20px;">{{ post.text }}</p>
+                <div id={{post.id}}>
+                    <details>
+                        <summary>Комментарии</summary>
+                        {% for comment in comments%}
+                           {% if post.id == comment.post_id_id%}
+                                <p style="padding: 0px 40px 0px 50px; background:#fdc073; border: 1px solid #21DB56;"> {{ comment.text }}</p>
+                           {% endif %}
+                        {% endfor %}
+
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <h6>{{ form.non_field_errors }}</h6>
+                            {% for f in form.visible_fields  %}
+                                    <p>{{ f.label }} {{ f }}</p>
+                                    <p>{{ f.errors }}</p>
+                            {% endfor %}
+                            <input type="hidden" name=post.id value= "{{ post.id }}">
+                            <button type="submit">Добавить комментарий</button>
+                        </form>
+
+                    </details>
+                </div>
             {% endfor %}
-        </div>
+        {% endif %}
     {% else %}
     <h1 ><a href="http://127.0.0.1:8000/login">Авторизуйся</a></h1>
     <h1 >либо зарегистрируйся </h1>
