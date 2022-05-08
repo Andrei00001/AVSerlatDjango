@@ -16,7 +16,11 @@
     <h1>{{ user.last_name }} {{ user.first_name }}</h1><h1>{{ user.email }}</h1>
      {% for u in users %}
                 {% if user.id == u.user_id %}
-                    {% if u.image %}<div><a href="{% url 'profile_update_ava' u.pk %}"> <img src="{{ u.image.url }}" alt="" width="50px" height="50px"></a></div>{% endif %}
+                    {% if u.image %}
+                        <div><a href="{% url 'profile_update_ava' u.pk %}"> <img src="{{ u.image.url }}" alt="" width="50px" height="50px"></a></div>
+                    {% else %}
+                        <div><a href="{% url 'profile_update_ava' u.pk %}"> <img src="/media/def.jpg" alt="" width="50px" height="50px"></a></div>
+                    {% endif %}
                 {% endif %}
     {% endfor %}
 

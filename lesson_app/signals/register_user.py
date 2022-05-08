@@ -15,5 +15,5 @@ def post_save_user(**kwargs):
 
     if created:
         print("Создан")
-        user_add = Profile(user=user, image="def.jpg")
+        user_add = Profile(user=user)
         user_add.save()
