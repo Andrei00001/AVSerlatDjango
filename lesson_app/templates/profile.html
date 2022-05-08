@@ -1,14 +1,19 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'lesson_app/css/style.css' %}">
 </head>
-<body>
-    <a href="/"> Главная </a>
-    <a href="/logout">Выйти</a>
-    <a href="/addpost">Добавить пост</a>
-    <a href="update/{{user.id}}">Редактировать профиль</a>
+<body  >
+
+
+<nav class="nav nav-pills nav-fill">
+  <a class="nav-link active" aria-current="page" href="/">Главная</a>
+  <a class="nav-link" href="/logout">Выйти</a>
+  <a class="nav-link" href="/addpost">Добавить пост</a>
+  <a class="nav-link disabled" href="/update/{{user.id}}">Редактировать профиль</a>
+</nav>
 
     <h1>Твой профиль</h1>
 
@@ -24,7 +29,7 @@
                 {% endif %}
     {% endfor %}
 
-    <h1>Твой посты</h1>
+    <h1 >Твой посты</h1>
     {% for post in posts %}
 
         {% if user.id == post.user_id %}
