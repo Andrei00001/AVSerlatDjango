@@ -9,9 +9,10 @@
     {% csrf_token %}
     <h6>{{ form.non_field_errors }}</h6>
     {% for f in form.visible_fields  %}
-
+        {% if f != form.user%}
             <p>{{ f.label }} {{ f }}</p>
             <p>{{ f.errors }}</p>
+        {% endif %}
     {% endfor %}
     <button type="submit">Добавить</button>
 </form>

@@ -1,7 +1,13 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
+
+class User(AbstractUser):
+    class Meta:
+        db_table = 'auth_user'
+
+    def get_absolute_url(self):
+        return "/profile"
 
 
 class Post(models.Model):
@@ -15,6 +21,9 @@ class Post(models.Model):
 
     def __str__(self):
         return f"{self.user} -- {self.title}  я вытянул ID {self.id}"
+
+    def get_absolute_url(self):
+        return "/profile"
 
 
 class Comments(models.Model):
@@ -32,3 +41,6 @@ class Like(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
+
+    def get_absolute_url(self):
+        return "/profile"

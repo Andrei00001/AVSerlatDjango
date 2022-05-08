@@ -1,9 +1,7 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
 
 from lesson_app.forms.addpost import AddPostForm
-from lesson_app.models import Post, Comments
 
 
 class AddPost(View):

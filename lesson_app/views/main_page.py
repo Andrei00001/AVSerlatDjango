@@ -17,6 +17,7 @@ class Main_page(View):
         new_request = request.POST.copy()
         new_request['user'] = request.user.id
         new_request['post_id'] = new_request['post.id']
+
         form = AddCommentsForm(new_request, request.FILES)
         if form.is_valid():
             form.save()
