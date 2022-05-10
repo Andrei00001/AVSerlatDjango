@@ -8,7 +8,7 @@ class AddPost(View):
     def get(self, request):
         form = AddPostForm()
         context = {"title": "Добавить пост", "form": form}
-        return render(request, "addpost.html", context)
+        return render(request, "add_post.html", context)
 
     def post(self, request):
         new_request = request.POST.copy()
@@ -22,4 +22,4 @@ class AddPost(View):
             "title": "Добавить пост",
             "form": form
         }
-        return render(request, "addpost.html", context)
+        return render(request, "add_post.html", context)

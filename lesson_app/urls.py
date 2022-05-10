@@ -38,10 +38,10 @@ urlpatterns = [
     path('profile/', Profile_user.as_view(), name='profile'),
     path('profile/update/', UserUpd.as_view(), name='profile_update'),
     path('profile/update/ava/<int:pk>/', UpdateProfileAva.as_view(), name='profile_update_ava'),
-    path('addpost/', AddPost.as_view(), name='addpost'),
-    path('profile/updatepost/<int:pk>/', UpdatePostForm.as_view(), name='update_post'),
-    path('profile/delete/<int:pk>/', DeletePpost.as_view(), name='deletete_post'),
-    path('profile/delete/comment/<int:pk>/', DeleteCcomment.as_view(), name='deletete_comment'),
+    path('addpost/', AddPost.as_view(), name='add_post'),
+    path('profile/update_post/<int:pk>/', UpdatePostForm.as_view(), name='update_post'),
+    path('profile/delete/<int:pk>/', DeletePpost.as_view(), name='delete_post'),
+    path('profile/delete/comment/<int:pk>/', DeleteCcomment.as_view(), name='delete_comment'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
