@@ -28,8 +28,10 @@ from lesson_app.views.logout import Logout_user
 from lesson_app.views.main_page import Main_page
 
 from lesson_app.views.profile import Profile_user
+from lesson_app.views.profile_upd_v import UserUpd
 
 from lesson_app.views.register import RegisterUser
+from lesson_app.views.updateava import UpdateProfileAva
 
 urlpatterns = [
     path('', Main_page.as_view(), name='main_page'),
@@ -37,8 +39,8 @@ urlpatterns = [
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', Logout_user.as_view(), name='logout'),
     path('profile/', Profile_user.as_view(), name='profile'),
-    path('profile/update/<int:pk>/', UpdateProfileForm.as_view(), name='profile_update'),
-    path('profile/update/ava/<int:pk>/', UpdateProfileAvaForm.as_view(), name='profile_update_ava'),
+    path('profile/update/', UserUpd.as_view(), name='profile_update'),
+    path('profile/update/ava/<int:pk>/', UpdateProfileAva.as_view(), name='profile_update_ava'),
     path('addpost/', AddPost.as_view(), name='addpost'),
     path('profile/updatepost/<int:pk>/', UpdatePostForm.as_view(), name='update_post'),
     path('profile/delete/<int:pk>/', delete_post, name='deletete_post'),
