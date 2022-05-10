@@ -2,7 +2,7 @@ from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.views.generic import CreateView
 
-from lesson_app.forms.registeruserforms import RegisterUserForms
+from lesson_app.forms.register_user_forms import RegisterUserForms
 
 
 class RegisterUser(CreateView):

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 
-from lesson_app.forms.addpost import AddPostForm
+from lesson_app.forms.add_post import AddPostForm
 
 
 class AddPost(View):

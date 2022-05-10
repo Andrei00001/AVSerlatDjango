@@ -1,10 +1,13 @@
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.views import View
+
 from lesson_app.models import Comments
 
 
-def delete_comment(request, pk):
-    get_comment = Comments.objects.get(pk=pk)
-    get_comment.delete()
+class DeleteCcomment(View):
+    def get(self,request,pk):
+        get_comment = Comments.objects.get(pk=pk)
+        get_comment.delete()
 
-    return redirect(reverse('profile'))
+        return redirect(reverse('profile'))
