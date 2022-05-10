@@ -1,9 +1,7 @@
-{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
-    <link type="text/css" rel="style" href="{% static 'lesson_app/css/style.css' %}">
 </head>
 <body>
 
@@ -11,7 +9,7 @@
 <nav>
   <a href="/">Главная</a>
   <a href="/logout">Выйти</a>
-  <a href="/addpost">Добавить пост</a>
+  <a href="/add_post">Добавить пост</a>
   <a href="update">Редактировать профиль</a>
 </nav>
 
@@ -24,7 +22,7 @@
                     {% if u.image %}
                         <div><a href="{% url 'profile_update_ava' u.id %}"> <img src="{{ u.image.url }}" alt="" width="50px" height="50px"></a></div>
                     {% else %}
-                        <div><a href="{% url 'profile_update_ava' u.id %}"> <img src="/media/def.jpg" alt="" width="50px" height="50px"></a></div>
+                        <div><a href="{% url 'profile_update_ava' u.id %}"> <img src="/static/lesson_app/image/def.jpg" alt="" width="50px" height="50px"></a></div>
                     {% endif %}
                 {% endif %}
     {% endfor %}
