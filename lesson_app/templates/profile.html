@@ -44,7 +44,8 @@
                         {% if comment.post_id_id == post.id%}
 
                              <div  style="padding: 5px 0 5px 20px; background:#fdc073; border: 1px solid #d622e6;">
-                                 {{ comment.user.last_name }} {{ comment.user.first_name }} <a href="delete/comment/{{comment.id}}">Удалить комментарий</a></div>
+                                 <img  src="{{ comment.user.profile.image.url }} " alt="" style="border-radius: 20px;" width="20px" height="20px">
+                                  {{ comment.user.last_name }} {{ comment.user.first_name }} <a href="delete/comment/{{comment.id}}">Удалить комментарий</a></div>
                             <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;">
                                 {{ comment.text }}</div>
                         {% endif %}
