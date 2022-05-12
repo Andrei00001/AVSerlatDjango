@@ -1,23 +1,27 @@
 
-
 <title>Редактирование профиля</title>
+{% if request.user.is_authenticated %}
 
-<h1>Редактирование профиля</h1>
-
-<form method="post" enctype="multipart/form-data">
+    <h1>Редактирование профиля</h1>
+    <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-{% for f in form %}
-<p><label for="{{ f.id_for_label }}">{{f.label}}:</label>{{ f }}</p>
-<div>{{ f.errors }}</div>
-{% endfor %}
+    {% for f in form %}
+    <p><label for="{{ f.id_for_label }}">{{f.label}}:</label>{{ f }}</p>
+    <div>{{ f.errors }}</div>
+    {% endfor %}
 
-{% for f in photo_form %}
-<p><label for="{{ f.id_for_label }}">{{f.label}}:</label>{{ f }}</p>
-<div>{{ f.errors }}</div>
-{% endfor %}
-
-
+    {% for f in photo_form %}
+    <p><label for="{{ f.id_for_label }}">{{f.label}}:</label>{{ f }}</p>
+    <div>{{ f.errors }}</div>
+    {% endfor %}
     <button type="submit">Редактировать</button>
+    </form>
 
+{% else %}
 
-</form>
+    <h1 ><a href="http://127.0.0.1:8000/login">Авторизуйся</a></h1>
+    <h1 >либо зарегистрируйся </h1>
+    <h1 ><a href="http://127.0.0.1:8000/register">Регистрация</a></h1>
+
+{% endif %}
+

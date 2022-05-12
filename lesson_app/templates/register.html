@@ -2,10 +2,15 @@
 
 <title>Регистрация</title>
 
-<h1>Регистрация</h1>
+
+
+{% if request.user.is_authenticated %}
+<meta http-equiv="refresh" content="0.5;URL= {% url 'main_page'%}" />
+{% else %}
 
 <form method="post">
-    {% csrf_token %}
+<h1>Регистрация</h1>
+{% csrf_token %}
 {% for f in form %}
 <p><label for="{{ f.id_for_label }}">{{f.label}}:</label>{{ f }}</p>
 <div>{{ f.errors }}</div>
@@ -13,6 +18,6 @@
 
 
     <button type="submit">Регистрация</button>
-
+{% endif %}
 
 </form>

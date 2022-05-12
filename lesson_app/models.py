@@ -17,14 +17,15 @@ class Post(models.Model):
     title = models.CharField(max_length=128, unique=False, blank=False, null=False, verbose_name="Заголовок")
     text = models.TextField(blank=False, null=False, verbose_name="Текст поста")
     is_public = models.BooleanField(default=True, verbose_name="К общему обозрению")
-    image = models.ImageField(null=True, blank=True, verbose_name="Фото поста")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.user} -- {self.title}  я вытянул ID {self.id}"
 
     def get_absolute_url(self):
         return "/profile"
+
+
+class ImagePost(models.Model):
+    image = models.ImageField(null=True, blank=True, verbose_name="Фото поста")
+    post_image = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
 class Comments(models.Model):
@@ -45,5 +46,3 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         return "/profile"
-
-

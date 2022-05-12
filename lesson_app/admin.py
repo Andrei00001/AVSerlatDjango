@@ -4,14 +4,20 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as UserAdminBase
 from django.utils.safestring import mark_safe
 
-from lesson_app.models import Post, Comments, Profile, Like, User
+from lesson_app.models import Post, Comments, Profile, Like, User, ImagePost
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ("id", "created_at", "title", "text")
     ordering = ("-created_at", "-id")
-    readonly_fields = ("created_at",)
+    readonly_fields = ("created_at", "user")
+    list_display_links = ("id",)
+
+
+@admin.register(ImagePost)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ("id", "post_image", "image")
     list_display_links = ("id",)
 
 
@@ -45,3 +51,14 @@ class UserAdmin(UserAdminBase):
     inlines = (
         ProfileInline,
     )
+
+# @admin.register(Profile)
+# class PostAdmin(admin.ModelAdmin):
+#     list_display = ("user", "get_image")
+#     readonly_fields = ("get_image",)
+#
+#     def get_image(self, obj):
+#         if obj.image:
+#             return mark_safe(f"<img src={obj.image.url} width='50' height='50' >")
+#
+#     get_image.short_description = "Аватарка"

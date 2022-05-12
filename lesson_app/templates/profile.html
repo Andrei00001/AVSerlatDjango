@@ -6,58 +6,71 @@
 <body>
 
 
-<nav>
-  <a href="/">Главная</a>
-  <a href="/logout">Выйти</a>
-  <a href="/add_post">Добавить пост</a>
-  <a href="update">Редактировать профиль</a>
-</nav>
 
-<div class="content">
-    <h1>Твой профиль</h1>
+
+
     {% if request.user.is_authenticated %}
-    <h1>{{ user.last_name }} {{ user.first_name }}</h1><h1>{{ user.email }}</h1>
-     {% for u in users %}
-                {% if user.id == u.user_id %}
-                    {% if u.image %}
-                        <div><a href="{% url 'profile_update_ava' u.id %}"> <img src="{{ u.image.url }}" alt="" width="50px" height="50px"></a></div>
-                    {% else %}
-                        <div><a href="{% url 'profile_update_ava' u.id %}"> <img src="/static/lesson_app/image/def.jpg" alt="" width="50px" height="50px"></a></div>
+            <nav>
+          <a href="/">Главная</a>
+          <a href="/logout">Выйти</a>
+          <a href="/add_post">Добавить пост</a>
+          <a href="update">Редактировать профиль</a>
+        </nav>
+        <h1>Твой профиль</h1>
+        <h1>{{ user.last_name }} {{ user.first_name }}</h1><h1>{{ user.email }}</h1>
+         {% for u in users %}
+                    {% if user.id == u.user_id %}
+                        {% if u.image %}
+                            <div><a href="{% url 'profile_update_ava' u.id %}"> <img src="{{ u.image.url }}" alt="" width="50px" height="50px"></a></div>
+                        {% else %}
+                            <div><a href="{% url 'profile_update_ava' u.id %}"> <img src="/static/lesson_app/image/def.jpg" alt="" width="50px" height="50px"></a></div>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-    {% endfor %}
+        {% endfor %}
 
-    <h1 >Твой посты</h1>
-    {% for post in posts %}
+        <h1 >Твой посты</h1>
+        {% for post in posts %}
 
-        {% if user.id == post.user_id %}
-        <div style="padding: 5px 0 5px 20px; background:#fdc073; border: 1px solid #d622e6;">
-             <p><a href="update_post/{{post.id}}">Редактировать пост</a>
-                 <a href="delete/{{post.id}}">Удалить пост</a></p>
-             <h1>{{ post.title }}</h1>
-
-            {% if post.image %}<div><img src="{{ post.image.url }}" alt="" width="100px" height="100px"></div>{% endif %}
-             <p style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;">{{ post.text }}</p>
-                <details>
-                    <summary>Комментарии</summary>
-                    {% for comment in comments%}
-                        {% if comment.post_id_id == post.id%}
-
-                             <div  style="padding: 5px 0 5px 20px; background:#fdc073; border: 1px solid #d622e6;">
-                                 <img  src="{{ comment.user.profile.image.url }} " alt="" style="border-radius: 20px;" width="20px" height="20px">
-                                  {{ comment.user.last_name }} {{ comment.user.first_name }} <a href="delete/comment/{{comment.id}}">Удалить комментарий</a></div>
-                            <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;">
-                                {{ comment.text }}</div>
+            {% if user.id == post.user_id %}
+            <div style="padding: 5px 0 5px 20px; background:#fdc073; border: 1px solid #d622e6;">
+                 <p><a href="update_post/{{post.id}}">Редактировать пост</a>
+                     <a href="delete/{{post.id}}">Удалить пост</a></p>
+                 <h1>{{ post.title }}</h1>
+                    <div>
+                    {% for image in post_image %}
+                        {% if image.post_image_id == post.pk %}
+                            {% if image.image %}
+                                <img src="{{ image.image.url }}" alt="" width="100px" height="100px">
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
-                </details>
-            {% endif %}
-        </div>
+                    </div>
+                 <p style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;">{{ post.text }}</p>
+                    <details>
+                        <summary>Комментарии</summary>
+                        {% for comment in comments%}
+                            {% if comment.post_id_id == post.id%}
 
-    {% endfor %}
+                                 <div  style="padding: 5px 0 5px 20px; background:#fdc073; border: 1px solid #d622e6;">
+                                     <img  src="{{ comment.user.profile.image.url }} " alt="" style="border-radius: 20px;" width="20px" height="20px">
+                                      {{ comment.user.last_name }} {{ comment.user.first_name }} <a href="delete/comment/{{comment.id}}">Удалить комментарий</a></div>
+                                <div style="padding: 10px 40px 10px 50px; background:#fdc073; border: 1px solid #21DB56;">
+                                    {{ comment.text }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </details>
+                {% endif %}
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+            <h1 ><a href="http://127.0.0.1:8000/login">Авторизуйся</a></h1>
+        <h1 >либо зарегистрируйся </h1>
+        <h1 ><a href="http://127.0.0.1:8000/register">Регистрация</a></h1>
 
     {% endif %}
-</div>
+
 </body>
 </html>
 

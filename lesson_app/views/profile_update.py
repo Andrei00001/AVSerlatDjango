@@ -12,7 +12,6 @@ class UserUpd(View):
         user_form = UpdateProfileForm(instance=request.user)
         photo_form = UpdateProfileAvaForm(instance=request.user.profile)
         context = {"title": "Добавить пост", "form": user_form, "photo_form": photo_form}
-        print(f"{request.user.profile.image}", "-------------------")
         return render(request, "update_profile.html", context)
 
     def post(self, request):

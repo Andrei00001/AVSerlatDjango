@@ -2,13 +2,16 @@
 
 <title>Авторизация</title>
 
-<h1>Авторизация</h1>
+    {% if request.user.is_authenticated %}
+    <meta http-equiv="refresh" content="0.5;URL= {% url 'main_page'%}" />
+    {% else %}
+    <form method="post">
 
-<form method="post">
+    <h1>Авторизация</h1>
+
     {% csrf_token %}
     {{ form.as_p }}
-
     <button type="submit">Войти</button>
+    {% endif %}
 
-
-</form>
+    </form>
