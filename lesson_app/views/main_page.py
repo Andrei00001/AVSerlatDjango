@@ -2,15 +2,17 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from lesson_app.forms.add_comments_main_page_form import AddCommentsForm
-from lesson_app.models import Post, Comments
+from lesson_app.models import Post, Comments, ImagePost
 
 
 class Main_page(View):
     def get(self, request):
-        posts = Post.objects.filter(is_public=True).order_by("-created_at", "-id").all()
+        posts = Post.objects.filter(is_public=True).all()
+        print(posts)
+        image_post = ImagePost.objects.all()
         comment = Comments.objects.order_by("created_at").all()
         form = AddCommentsForm()
-        context = {"title": "дороу", "posts": posts, "comments": comment, "form": form}
+        context = {"title": "дороу", "posts": posts, "comments": comment, "form": form,"image_post":image_post}
         return render(request, "main_page.html", context)
 
     def post(self, request):

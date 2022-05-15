@@ -4,19 +4,22 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from lesson_app.forms.update_profile import UpdateProfileForm, UpdateProfileAvaForm
+from lesson_app.models import Profile, User
 
 
 class UserUpd(View):
 
     def get(self, request):
         user_form = UpdateProfileForm(instance=request.user)
-        photo_form = UpdateProfileAvaForm(instance=request.user.profile)
+        get_photo = Profile.objects.get(user=request.user)
+        photo_form = UpdateProfileAvaForm( files=request.FILES, data=request.POST,instance=get_photo)
         context = {"title": "Добавить пост", "form": user_form, "photo_form": photo_form}
         return render(request, "update_profile.html", context)
 
     def post(self, request):
         user_form = UpdateProfileForm(data=request.POST, instance=request.user)
-        photo_form = UpdateProfileAvaForm(files=request.FILES, data=request.POST, instance=request.user.profile)
+        get_photo = Profile.objects.get(user=request.user)
+        photo_form = UpdateProfileAvaForm(files=request.FILES, data=request.POST, instance=get_photo)
         if user_form.is_valid() and photo_form.is_valid():
             user_form.save()
             photo_form.save()

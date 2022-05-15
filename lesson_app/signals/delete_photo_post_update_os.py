@@ -3,10 +3,10 @@ import os
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
-from lesson_app.models import Post
+from lesson_app.models import ImagePost
 
 
-@receiver(pre_save, sender=Post)
+@receiver(pre_save, sender=ImagePost)
 def post_save_user(sender, instance, **kwargs):
     if not instance.pk:
         return False

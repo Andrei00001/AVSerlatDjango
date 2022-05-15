@@ -1,6 +1,5 @@
 from django import forms
 
-
 from lesson_app.models import User, Profile
 
 
@@ -15,6 +14,4 @@ class UpdateProfileAvaForm(forms.ModelForm):
     class Meta:
         model = Profile
         template_name = "update_profile.html"
-        fields = ["image", ]
-
-
+        fields = ["image", "id"]

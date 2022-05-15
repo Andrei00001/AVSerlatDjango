@@ -1,15 +1,16 @@
 
-<title>Редактирование профиля</title>
+<title>Редактирование поста</title>
 {% if request.user.is_authenticated %}
 
-    <h1>Редактирование профиля</h1>
+    <h1>Редактирование поста</h1>
     <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+       {{ form.as_p}}
+        {{photo_form.management_form}}
+    {% for f in photo_form %}
+        {{ f.as_p}}
 
-
-    {{ form.as_p}}
-    {{ photo_form.as_p}}
-
+    {% endfor %}
     <button type="submit">Редактировать</button>
     </form>
 

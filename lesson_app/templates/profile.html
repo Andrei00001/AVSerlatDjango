@@ -23,7 +23,7 @@
                         {% if u.image %}
                             <div><a href="{% url 'profile_update_ava' u.id %}"> <img src="{{ u.image.url }}" alt="" width="50px" height="50px"></a></div>
                         {% else %}
-                            <div><a href="{% url 'profile_update_ava' u.id %}"> <img src="/static/lesson_app/image/def.jpg" alt="" width="50px" height="50px"></a></div>
+                            <div><a href="{% url 'profile_update_ava' u.id %}"><img src="/static/lesson_app/image/def.jpg" alt="" width="50px" height="50px"></a></div>
                         {% endif %}
                     {% endif %}
         {% endfor %}

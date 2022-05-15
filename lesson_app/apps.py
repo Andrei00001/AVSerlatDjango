@@ -7,5 +7,6 @@ class LessonAppConfig(AppConfig):
 
     def ready(self):
         import lesson_app.signals.register_user
-        import lesson_app.signals.delete_photo_post_os
-        import lesson_app.signals.delete_photo_user_os
+        import lesson_app.signals.delete_photo_post_update_os
+        import lesson_app.signals.delete_photo_user_update_os
+        import lesson_app.signals.photo_delete_post_os

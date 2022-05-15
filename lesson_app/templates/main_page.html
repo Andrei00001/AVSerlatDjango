@@ -13,9 +13,15 @@
         {% if post.is_public != "1" %}
             {% for post in posts %}
 
-                <h1  style="color:#c2c05d;" >{{ post.user}} </h1>
+                <h1  style="color:#c2c05d;" >{{ post.user.last_name}} {{ post.user.first_name}} </h1>
                 <h3  style="color:#f2a05d;" >{{ post.title }}</h3>
-                {% if post.image %}<p><img src="{{ post.image.url }}" alt="" width="100px" height="100px"></p>{% endif %}
+                <p>
+                {% for image in image_post%}
+                {% if image.post_image.id == post.id%}
+                    {% if image.image %}<img src="{{ image.image.url }}" alt="" width="100px" height="100px">{% endif %}
+                {% endif %}
+                {% endfor %}
+                </p>
                 <p style="padding:0px 40px 0px 20px;">{{ post.text }}</p>
                 <div id={{post.id}}>
                     <details>

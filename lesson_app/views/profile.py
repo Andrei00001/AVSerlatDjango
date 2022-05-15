@@ -6,8 +6,8 @@ from lesson_app.models import Profile, Post, Comments, Like, ImagePost
 
 class Profile_user(View):
     def get(self, request):
-        user_ava = Profile.objects.order_by("id").all()
-        user_post = Post.objects.all()
+        user_ava = Profile.objects.filter(user=request.user)
+        user_post = Post.objects.order_by('-id').all()
         comment = Comments.objects.all()
         like = Like.objects.order_by("id").all()
         post_image = ImagePost.objects.all()
