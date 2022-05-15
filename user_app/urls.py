@@ -15,20 +15,25 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import path, include
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('main_page_app.urls')),
-    path('', include('user_app.urls')),
-    path('', include('profile_app.urls')),
-    path('', include('posts_app.urls')),
-    path('', include('comments_app.urls')),
-]
+from django.urls import path
 
+from user_app.views.login import LoginUser
+from user_app.views.logout import Logout_user
+from main_page_app.views.main_page import Main_page
+from comments_app.views.delete_comment import DeleteCcomment
+
+from user_app.views.register import RegisterUser
+
+urlpatterns = [
+
+    path('register/', RegisterUser.as_view(), name='register'),
+    path('login/', LoginUser.as_view(), name='login'),
+    path('logout/', Logout_user.as_view(), name='logout'),
+
+    path('profile/delete/comment/<int:pk>/', DeleteCcomment.as_view(), name='delete_comment'),
+]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 urlpatterns += staticfiles_urlpatterns()
