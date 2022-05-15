@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from lesson_app.models import Post, ImagePost
-from lesson_app.forms.update_post import UpdatePostForm, UpdateImagePostForm
+from lesson_app.forms.update_post import UpdatePostForm
 
 
 class UpdatePost(View):
@@ -16,17 +16,16 @@ class UpdatePost(View):
         image_form = self.ImageFormSet(queryset=ImagePost.objects.filter(post_image=get_post))
         # for obj in get_image:
         #     image_form.append(UpdateImagePostForm(instance=obj))
-
+ 
         context = {"title": "Добавить пост", "form": post_form, "photo_form": image_form}
         return render(request, "update_post.html", context)
 
     def post(self, request, pk):
         get_post = Post.objects.get(pk=pk)
-        new_request = request.POST.copy()
 
-        post_form = UpdatePostForm(data=new_request, instance=get_post)
+        post_form = UpdatePostForm(data=request.POST, instance=get_post)
 
-        form_image = self.ImageFormSet(new_request or None, request.FILES or None)
+        form_image = self.ImageFormSet(request.POST or None, request.FILES or None)
         get_image = ImagePost.objects.filter(post_image=get_post)
         if post_form.is_valid() and form_image.is_valid():
             post_form.save()

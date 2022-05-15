@@ -7,7 +7,7 @@ from lesson_app.models import Post, Comments, ImagePost
 
 class Main_page(View):
     def get(self, request):
-        posts = Post.objects.filter(is_public=True).all()
+        posts = Post.objects.filter(is_public=True).order_by("-id").all()
         print(posts)
         image_post = ImagePost.objects.all()
         comment = Comments.objects.order_by("created_at").all()

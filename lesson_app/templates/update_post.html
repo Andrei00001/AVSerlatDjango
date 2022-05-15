@@ -5,12 +5,9 @@
     <h1>Редактирование поста</h1>
     <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-       {{ form.as_p}}
-        {{photo_form.management_form}}
-    {% for f in photo_form %}
-        {{ f.as_p}}
-
-    {% endfor %}
+    {{ form.as_p}}
+    {{photo_form.management_form}}
+    {{ photo_form.as_p}}
     <button type="submit">Редактировать</button>
     </form>
 

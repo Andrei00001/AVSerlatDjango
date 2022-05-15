@@ -42,7 +42,7 @@ class Like(models.Model):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     image = models.ImageField(null=True, blank=True)
 
     def get_absolute_url(self):
