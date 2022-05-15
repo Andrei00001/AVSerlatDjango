@@ -31,7 +31,6 @@ urlpatterns = [
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', Logout_user.as_view(), name='logout'),
 
-    path('profile/delete/comment/<int:pk>/', DeleteCcomment.as_view(), name='delete_comment'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
