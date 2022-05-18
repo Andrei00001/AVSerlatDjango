@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--    <link type= "text/css" href = "static/css/style.css" rel="stylesheet"/>-->
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <a href="/profile">Профиль</a>
+    <a href="http://127.0.0.1:8000/logout">Выйти</a>
+
+    {% for post in posts %}
+            {% for tag in tags%}
+                    {% if tag.post == post %}
+                        <h1  style="color:#c2c05d;" >{{ post.user.last_name}} {{ post.user.first_name}} </h1>
+                        <h3  style="color:#f2a05d;" >{{ post.title }}</h3>
+                        <p>
+                        {% for image in image_post%}
+                        {% if image.post_image.id == post.id%}
+                            {% if image.image %}<img src="{{ image.image.url }}" alt="" width="100px" height="100px">{% endif %}
+                        {% endif %}
+                        {% endfor %}
+                        </p>
+                        <p style="padding:0px 40px 0px 20px;">{{ post.text }}</p>
+                        <div id={{post.id}}>
+                            <details>
+                                <summary>Комментарии</summary>
+
+                                {% for comment in comments%}
+                                   {% if post.id == comment.post_id_id%}
+                                        <p style="padding: 0px 40px 0px 50px; background:#fdc073; border: 1px solid #21DB56;"> {{ comment.text }}</p>
+                                   {% endif %}
+                                {% endfor %}
+
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <h6>{{ form.non_field_errors }}</h6>
+                                    {% for f in form.visible_fields  %}
+                                            <p>{{ f.label }} {{ f }}</p>
+                                            <p>{{ f.errors }}</p>
+                                    {% endfor %}
+                                    <input type="hidden" name=post.id value= "{{ post.id }}">
+
+                                    <button type="submit">Добавить комментарий</button>
+                                </form>
+                            </details>
+                        </div>
+                    {% endif %}
+            {% endfor %}
+    {% endfor %}
+</body>
+</html>

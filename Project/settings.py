@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'posts_app',
     'comments_app',
     'main_page_app',
+    'hashtag_app',
+    'menu_app',
 ]
 AUTH_USER_MODEL = 'user_app.User'
 MIDDLEWARE = [
@@ -65,7 +67,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
+
         },
     },
 ]

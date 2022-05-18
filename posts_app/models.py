@@ -1,8 +1,7 @@
-
 from django.db import models
 
-
 # Create your models here.
+
 from user_app.models import User
 
 
@@ -13,6 +12,7 @@ class Post(models.Model):
     text = models.TextField(blank=False, null=False, verbose_name="Текст поста")
     is_public = models.BooleanField(default=True, verbose_name="К общему обозрению")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tag = models.CharField(max_length=128, blank=True, null=True)
 
 
 class ImagePost(models.Model):

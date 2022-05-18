@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('profile_app.urls')),
     path('', include('posts_app.urls')),
     path('', include('comments_app.urls')),
+    path('', include('hashtag_app.urls')),
 ]
 
 

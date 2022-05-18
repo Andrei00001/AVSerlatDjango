@@ -10,4 +10,4 @@ class DeleteCcomment(View):
         get_comment = Comments.objects.get(pk=pk)
         get_comment.delete()
 
-        return redirect(reverse('profile'))
+        return redirect('profile')

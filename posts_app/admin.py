@@ -3,6 +3,8 @@ from django.contrib import admin
 # Register your models here.
 from django.utils.safestring import mark_safe
 
+from hashtag_app.admin import TagsPostAdmin
+from hashtag_app.models import Tags
 from posts_app.models import ImagePost, Post
 
 
@@ -20,10 +22,13 @@ class PostImageAdmin(admin.StackedInline):
     get_image.short_description = "Фото к посту"
 
 
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     inlines = (
         PostImageAdmin,
+        TagsPostAdmin,
+
     )
     list_display = ("id", "created_at", "title", "text")
     ordering = ("-created_at", "-id")

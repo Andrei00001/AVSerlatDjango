@@ -7,3 +7,4 @@ class AddPostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ["title", "text", "is_public"]
+
