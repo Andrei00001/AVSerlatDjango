@@ -21,8 +21,7 @@ class AddPost(View):
             title = form.cleaned_data['title']
             text = form.cleaned_data['text']
             is_public = form.cleaned_data['is_public']
-            rez = re.findall(r"#\w+", text)
-            post_obj = Post.objects.create(user=user, title=title, text=text, is_public=is_public, tag=rez)
+            post_obj = Post.objects.create(user=user, title=title, text=text, is_public=is_public)
             for f in files:
                 ImagePost.objects.create(post_image=post_obj, image=f)
             return redirect("profile")
