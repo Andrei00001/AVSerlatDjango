@@ -22,7 +22,6 @@ class PostImageAdmin(admin.StackedInline):
     get_image.short_description = "Фото к посту"
 
 
-
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     inlines = (
