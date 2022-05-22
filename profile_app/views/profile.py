@@ -12,8 +12,9 @@ class Profile_user(View):
     def get(self, request):
         if request.user.is_authenticated:
             user_ava = Profile.objects.filter(user=request.user)
-            user_post = Post.objects.order_by('-id').all()
-            comment = Comments.objects.all()
+            user_post = Post.objects.order_by('-id').filter(user=request.user)
+
+            comment = Comments.objects.filter(user=request.user)
             like = Like.objects.order_by("id").all()
             post_image = ImagePost.objects.all()
             context = {"title": "Акк",

@@ -9,9 +9,11 @@ from posts_app.forms.add_image_post import AddImagePostForm
 
 class AddPost(View):
     def get(self, request):
-        form = AddImagePostForm()
-        context = {"title": "Добавить пост", "form": form}
-        return render(request, "posts_app/add_post.html", context)
+        if request.user.is_authenticated:
+            form = AddImagePostForm()
+            context = {"title": "Добавить пост", "form": form}
+            return render(request, "posts_app/add_post.html", context)
+        return redirect("login")
 
     def post(self, request):
         form = AddImagePostForm(request.POST or None, request.FILES or None)

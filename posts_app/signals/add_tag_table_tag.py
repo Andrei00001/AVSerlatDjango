@@ -17,12 +17,13 @@ def post_save_user(sender, instance, **kwargs):
     if tags:
         for tag in tags:
             z = Tags.objects.filter(tag=tag)
+            print(z)
             if not z:
-                tag_obj = Tags(tag=tag)
+                tag_obj = Tags(tag=tag.lower())
                 tag_obj.save()
                 PostTags.objects.create(tag=tag_obj, post=post)
             else:
-                z = Tags.objects.get(tag=tag)
+                z = Tags.objects.get(tag=tag.lower())
                 PostTags.objects.create(tag=z, post=post)
 
     print(tags, "signals")

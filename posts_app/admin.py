@@ -4,7 +4,6 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from hashtag_app.admin import TagsPostAdmin
-from hashtag_app.models import Tags
 from posts_app.models import ImagePost, Post
 
 

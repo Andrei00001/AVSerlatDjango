@@ -9,11 +9,13 @@ from profile_app.models import Profile
 class UserUpd(View):
 
     def get(self, request):
-        user_form = UpdateProfileForm(instance=request.user)
-        get_photo = Profile.objects.get(user=request.user)
-        photo_form = UpdateProfileAvaForm( files=request.FILES, data=request.POST,instance=get_photo)
-        context = {"title": "Добавить пост", "form": user_form, "photo_form": photo_form}
-        return render(request, "profile_app/update_profile.html", context)
+        if request.user.is_authenticated:
+            user_form = UpdateProfileForm(instance=request.user)
+            get_photo = Profile.objects.get(user=request.user)
+            photo_form = UpdateProfileAvaForm( files=request.FILES, data=request.POST,instance=get_photo)
+            context = {"title": "Добавить пост", "form": user_form, "photo_form": photo_form}
+            return render(request, "profile_app/update_profile.html", context)
+        return redirect("login")
 
     def post(self, request):
         user_form = UpdateProfileForm(data=request.POST, instance=request.user)

@@ -7,7 +7,9 @@ from comments_app.models import Comments
 
 class DeleteCcomment(View):
     def get(self,request,pk):
-        get_comment = Comments.objects.get(pk=pk)
-        get_comment.delete()
+        if request.user.is_authenticated:
+            get_comment = Comments.objects.get(pk=pk)
+            get_comment.delete()
 
-        return redirect('profile')
+            return redirect('profile')
+        return redirect("login")

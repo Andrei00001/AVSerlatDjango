@@ -8,7 +8,6 @@ class MenuAdmin(admin.StackedInline):
     list_display = ("id", "title", "url")
 
 
-
 @admin.register(ClassMenu)
 class ClassMenuAdmin(admin.ModelAdmin):
     inlines = (

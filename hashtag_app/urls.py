@@ -16,9 +16,18 @@ Including another URLconf
 
 from django.urls import path
 
+from hashtag_app.api.views.hashtag import TagsView
+from hashtag_app.api.views.tag_post import TagsPostView
+from hashtag_app.views.cloud import PostTagCloud
 from hashtag_app.views.tags import PostTag
 
+
 urlpatterns = [
+    path('tag_cloud/', PostTagCloud.as_view(), name='tag_cloud'),
     path('tag_post/<str:tag>/', PostTag.as_view(), name='post_tags'),
+    path('api/tag_post/<str:tag>/', TagsPostView.as_view(), name='tags_post'),
+    path('api/tag', TagsView.as_view({"get": "list", "post": "create"}), name='tag_page'),
 
 ]
+
+

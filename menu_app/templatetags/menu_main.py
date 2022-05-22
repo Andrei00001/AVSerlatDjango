@@ -11,6 +11,12 @@ def main_menu():
     return {'menu': menu, }
 
 
+@register.inclusion_tag('base.html')
+def profile_menu():
+    menu = Menu.objects.filter(type=2)
+    return {'menu': menu, }
+
+
 @register.inclusion_tag('base.html', takes_context=True)
 def user_menu(context):
     if context.request.user.is_authenticated:

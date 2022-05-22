@@ -14,11 +14,10 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
-
 class ImagePost(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     image = models.ImageField(null=True, blank=True, verbose_name="Фото поста")
-    post_image = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post_image = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="post_img")
 
 
 class Like(models.Model):

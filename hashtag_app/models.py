@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # Create your models here.
 from posts_app.models import Post
 
@@ -17,4 +16,4 @@ class Tags(models.Model):
 
 class PostTags(models.Model):
     tag = models.ForeignKey(Tags, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="tag_post")

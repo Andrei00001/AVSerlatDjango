@@ -19,7 +19,6 @@ from django.urls import path
 
 from main_page_app.views.main_page import Main_page
 
-
 urlpatterns = [
     path('', Main_page.as_view(), name='main_page'),
 

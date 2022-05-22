@@ -9,7 +9,7 @@ class ClassMenu(models.Model):
 
 
 class Menu(models.Model):
-    title = models.CharField(max_length=64, null=False, blank=False, unique=True)
+    title = models.CharField(max_length=64, null=False, blank=False)
     url = models.CharField(max_length=128, null=False, blank=False)
     type = models.ForeignKey(ClassMenu, on_delete=models.CASCADE)
 

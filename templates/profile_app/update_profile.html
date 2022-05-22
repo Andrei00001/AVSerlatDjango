@@ -1,23 +1,13 @@
 
 <title>Редактирование профиля</title>
-{% if request.user.is_authenticated %}
+<h1>Редактирование профиля</h1>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p}}
+{{ photo_form.as_p}}
 
-    <h1>Редактирование профиля</h1>
-    <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+<button type="submit">Редактировать</button>
+</form>
 
 
-    {{ form.as_p}}
-    {{ photo_form.as_p}}
-
-    <button type="submit">Редактировать</button>
-    </form>
-
-{% else %}
-
-    <h1 ><a href="http://127.0.0.1:8000/login">Авторизуйся</a></h1>
-    <h1 >либо зарегистрируйся </h1>
-    <h1 ><a href="http://127.0.0.1:8000/register">Регистрация</a></h1>
-
-{% endif %}
 

@@ -11,7 +11,7 @@ from profile_app.admin import ProfileInline
 
 @admin.register(Comments)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("id", "created_at", "text", "post_id_id")
+    list_display = ("id", "created_at", "text_comment", "post_id_id")
     ordering = ("-created_at", "-id")
     readonly_fields = ("created_at",)
     list_display_links = ("post_id_id", "id")

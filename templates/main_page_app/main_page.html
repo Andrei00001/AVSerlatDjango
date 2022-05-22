@@ -43,7 +43,8 @@ details[open] summary:before {
 <body>
         <div>
             {% for tag in tags %}
-            <a href="{% url 'post_tags' tag.tag %}"><button class="btn btn-outline-success" type="submit">{{ tag.tag }}</button></a>
+            <a href="{% url 'post_tags' tag.tag %}"><button class="btn btn-outline-success" type="submit">{{ tag.tag }}
+                <span class="badge bg-primary rounded-pill"> {{ tag.count }} </span></button></a>
             {% endfor %}
         </div>
 
@@ -67,18 +68,14 @@ details[open] summary:before {
                 <div class="media-body">
                  <h1  class="card-title" >{{ post.title }}</h1>
                 <h5 class="card-text">{{ post.text }}</h5>
-                </div>
-
-
-
-
+            </div>
             <div id={{post.id}}>
                 <details style="padding: 10px;">
                     <summary>Комментарии</summary>
                         <ul class="list-group list-group-flush">
                         {% for comment in comments%}
                            {% if post.id == comment.post_id_id%}
-                             <li class="list-group-item"> {{ comment.text }}</li>
+                             <li class="list-group-item"> {{ comment.text_comment }}</li>
                            {% endif %}
                         {% endfor %}
                         </ul>
@@ -88,7 +85,7 @@ details[open] summary:before {
                         {% csrf_token %}
                         <h6>{{ form.non_field_errors }}</h6>
                         {% for f in form.visible_fields  %}
-                                <p>{{ f.label }} {{ f }}</p>
+                                <p>Текст комментария: {{ f }}</p>
                         {% endfor %}
                         <input  type="hidden" name=post.id value= "{{ post.id }}">
                         <button type="submit" class="btn btn-info">Добавить комментарий</button>
