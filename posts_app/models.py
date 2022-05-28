@@ -19,7 +19,3 @@ class ImagePost(models.Model):
     image = models.ImageField(null=True, blank=True, verbose_name="Фото поста")
     post_image = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="post_img")
 
-
-class Like(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)

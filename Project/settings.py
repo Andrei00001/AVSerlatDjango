@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'main_page_app',
     'hashtag_app',
     'menu_app',
+    'like_app',
 ]
 AUTH_USER_MODEL = 'user_app.User'
 MIDDLEWARE = [
@@ -135,4 +136,8 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 1
+}
+
+SPECTACULAR_SETTINGS = {
+    "COMPONENT_SPLIT_REQUEST": True
 }

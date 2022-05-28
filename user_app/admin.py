@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as UserAdminBase
 from django.contrib.auth.models import User
 
 from comments_app.models import Comments
-from posts_app.models import Like
+
 from profile_app.admin import ProfileInline
 
 
@@ -17,9 +17,6 @@ class PostAdmin(admin.ModelAdmin):
     list_display_links = ("post_id_id", "id")
 
 
-@admin.register(Like)
-class PostAdmin(admin.ModelAdmin):
-    list_display = ("id", "user_id", "post_id")
 
 
 @admin.register(User)

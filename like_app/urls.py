@@ -16,11 +16,9 @@ Including another URLconf
 
 from django.urls import path, include
 
-from comments_app.api.views.router import api_router
-from comments_app.views.delete_comment import DeleteCcomment
+from like_app.api.views.router import api_router
 
 urlpatterns = [
 
-    path('profile/delete/comment/<int:pk>/', DeleteCcomment.as_view(), name='delete_comment'),
     path('api/', include(api_router.urls)),
 ]

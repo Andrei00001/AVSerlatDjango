@@ -1,21 +1,16 @@
 from rest_framework import serializers
 
-from comments_app.models import Comments
+from comments_app.api.serializers.comments import CommentsSerializer
 from hashtag_app.models import PostTags, Tags
+from like_app.models import Like
 from posts_app.models import Post, ImagePost
-from user_app.models import User
+from profile_app.api.serializers.profile import UserSerializer
 
 
 class PostImgSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImagePost
         fields = "image",
-
-
-class PostUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = "username", "last_name", "first_name", "email"
 
 
 class TagsSerializer(serializers.ModelSerializer):
@@ -32,22 +27,32 @@ class PostTagsSerializer(serializers.ModelSerializer):
         fields = "tag",
 
 
-class PostSerializer(serializers.HyperlinkedModelSerializer):
+class LikePostSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Like
+        fields = "user",
+
+
+class PostSerializer(serializers.ModelSerializer):
     post_img = PostImgSerializer(many=True, read_only=True)
-    user = PostUserSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
     tag_post = PostTagsSerializer(many=True, read_only=True)
+    post_comments = CommentsSerializer(many=True, read_only=True)
+    like_user = LikePostSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
-        fields = (
-            "title",
-            "text",
-            "created_at",
-            "user",
-            "post_img",
-            "tag_post",
+        fields = "__all__"
+        extra_kwargs = {
+            "file": {
+                "required": True,
+                "write_only": True,
+                "help_text": "Медиа"
+            }
 
-        )
+        }
 
     # publisher_user = serializers.HiddenField(
     #     default=serializers.CurrentUserDefault(),
