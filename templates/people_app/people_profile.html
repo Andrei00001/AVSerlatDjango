@@ -1,0 +1,105 @@
+{% load menu_main %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">{% profile_menu %}</div>
+    <div id="user_menu" class="navbar-text">{% user_menu %}</div>
+</nav>
+<style>
+
+    details > summary {
+        padding: 5px;
+        background-color: #eee;
+        color: #333;
+        border: 1px #ccc solid;
+        cursor: pointer;
+        list-style: none;
+    }
+
+    details > div {
+        border: 1px #ccc solid;
+        padding: 10px;
+    }
+
+details[open] > summary {
+    color:#eee;
+   background-color:#333;
+}
+summary:before {
+   content: "+";
+   font-size: 20px;
+   font-weight: bold;
+   margin: -5px 5px 0 0;
+}
+
+details[open] summary:before {
+   content: "-";
+}
+</style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+        <h1>{{ users.last_name }} {{ users.first_name }}</h1>
+        <h1 style="padding: 10px;">{{ users.email }}</h1>
+            {% if users.profile.image %}
+                <div><img src="{{ users.profile.image.url }}" alt="" width="100px" height="100px"></div>
+            {% else %}
+                <div><img src="/static/profile_app/image/def.jpg" alt="" width="100px" height="100px"></div>
+            {% endif %}
+
+      <div style="padding: 10px;" ></div>
+            {% if add_friend == 'Добавить в друзья' %}
+            <p><a href="add_friend/{{users}}"><button type="button" class="btn btn-warning">{{ add_friend }}</button></a>
+            {% else %}
+            <a href="del_friend/{{users}}"><button type="button" class="btn btn-danger">{{ add_friend }}</button></a>
+            {% endif%}
+
+            {% if podpis == 'Подписаться' %}
+            <a href="add_subscription/{{users}}"><button type="button" class="btn btn-warning">{{ podpis }}</button></a>
+            {% else %}
+            <a href="del_subscription/{{users}}"><button type="button" class="btn btn-danger">{{ podpis }}</button></a> </p>
+            {% endif%}
+
+        {% for post in posts %}
+                     <div>
+                        {% for image in post.post_img.all %}
+                                {% if image.image %}
+                                    <img src="{{ image.image.url }}" class="mr-3" alt="" width="100px" height="100px">
+                                {% endif %}
+                        {% endfor %}
+                    </div>
+
+                     <div class="media-body">
+                     <h1  class="card-title" >{{ post.title }}</h1>
+                    <h5 class="card-text">{{ post.text }}</h5>
+
+                    </div>
+                        <details style="padding: 10px;">
+                            <summary>Комментарии</summary>
+                            {% for comment in post.post_comments.all%}
+                                <ul class="list-group list-group-flush">
+                                     <div  style="padding: 5px 0 5px 20px; background:#fdc073; border: 1px solid #d622e6;">
+                                         {% if comment.user.profile.image %}
+                                         <img  src="{{ comment.user.profile.image.url }} " alt="" style="border-radius: 20px;" width="20px" height="20px">
+                                         {% endif %}
+                                          {{ comment.user.last_name }} {{ comment.user.first_name }} </div>
+                                   <li class="list-group-item">{{ comment.text_comment }}</li>
+
+                            {% endfor %}
+                                </ul>
+                        </details>
+                </div>
+            {% endfor %}
+
+</body>
+</html>
+
+
+
+
+
+

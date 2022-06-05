@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'hashtag_app',
     'menu_app',
     'like_app',
+    'people_app',
+    'chat_app',
 ]
 AUTH_USER_MODEL = 'user_app.User'
 MIDDLEWARE = [

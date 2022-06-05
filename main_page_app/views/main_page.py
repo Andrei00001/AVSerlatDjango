@@ -3,9 +3,10 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from comments_app.models import Comments
-from hashtag_app.models import Tags, PostTags
+from hashtag_app.models import Tags
 from posts_app.models import Post, ImagePost
 from comments_app.form.add_comments_main_page_form import AddCommentsForm
+from user_app.models import Subscriptions, Friends
 
 
 class Main_page(View):
@@ -26,13 +27,25 @@ class Main_page(View):
         #             count.pop(k)
         #             break
         #     i += 1
-        tags = Tags.objects.annotate(count=Count("posttags")).order_by("-count")[:5]
-        posts = Post.objects.filter(is_public=True).order_by("-id").all()
-        image_post = ImagePost.objects.all()
-        comment = Comments.objects.order_by("created_at").all()
-        form = AddCommentsForm()
-        context = {"title": "дороу", "posts": posts, "comments": comment, "form": form, "image_post": image_post,
-                   "tags": tags}
+        friends = Subscriptions.objects.filter(user=request.user)
+        people = (Friends.objects.annotate(count=Count("user")).order_by("-count"))[:5]
+        if friends:
+            for friend in friends:
+                post_friend = (Post.objects.filter(user=friend.subscription, is_public=True))
+                tags = Tags.objects.annotate(count=Count("posttags")).order_by("-count")[:5]
+                image_post = ImagePost.objects.all()
+                comment = Comments.objects.order_by("created_at").all()
+                form = AddCommentsForm()
+                if post_friend:
+                    context = {"title": "дороу", "post_friend": post_friend, "comments": comment, "form": form,
+                               "image_post": image_post,
+                               "tags": tags}
+                else:
+                    context = {"title": "дороу", "text": "Нету постов подпишись что их стало больше:",
+                               "people": people}
+        else:
+            context = {"title": "дороу", "text": "Подпишись на них они самые популярные социопат чёртов:",
+                       "people": people}
         return render(request, "main_page_app/main_page.html", context)
 
     def post(self, request):

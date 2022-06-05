@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    {% for item in chat %}
+        <div>
+            {{ item.text }} {{ item.sending_user }}
+        </div>
+    {% endfor %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h6>{{ form.non_field_errors }}</h6>
+        {% for f in form.visible_fields  %}
+                <p>Текст комментария: {{ f }}</p>
+        {% endfor %}
+        <button type="submit" class="btn btn-info">Отправить</button>
+    </form>
+
+</body>
+</html>

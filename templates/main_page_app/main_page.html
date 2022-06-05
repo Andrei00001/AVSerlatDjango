@@ -49,10 +49,24 @@ details[open] summary:before {
         </div>
 
         <div style="padding: 10px;" ></div>
-        {% for post in posts %}
+        {% if people %}
+            {{ text }}
+            {% for p in people %}
+                  <a href="{% url 'profile_peoples' p.user %}"><div>
+                    {% if p.user.profile.image %}
+                         <img src="{{ p.user.profile.image.url }}" style="border-radius: 20px;" class="mr-3" alt="" width="50px" height="50px">
+                    {% else %}
+                        <img src="/static/profile_app/image/def.jpg" style="border-radius: 20px;" class="mr-3" alt="" width="50px" height="50px">
+                    {% endif %}
+                    {{ p.user.first_name}} {{ p.user.last_name}}
+                </div></a>
+            {% endfor %}
+        {% endif %}
+
+        {% for post in post_friend %}
             <div class="card mb-3" style="padding: 10px;">
                 <div class="card-header">
-                    <p >{{ post.user.last_name}} {{ post.user.first_name}} </p>
+                    <p >{{ post.user.first_name}} {{ post.user.last_name}} </p>
                 </div>
                  <div class="card-body">
                         <div class="media">
@@ -95,6 +109,7 @@ details[open] summary:before {
             </div>
             </div>
         {% endfor %}
+
 
 
 </body>

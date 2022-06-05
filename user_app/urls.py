@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 
+from user_app.views.friends import Friends_user
 from user_app.views.login import LoginUser
 from user_app.views.logout import Logout_user
 from main_page_app.views.main_page import Main_page
@@ -30,6 +31,8 @@ urlpatterns = [
     path('register/', RegisterUser.as_view(), name='register'),
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', Logout_user.as_view(), name='logout'),
+    path('friends/', Friends_user.as_view(), name='friends'),
+
 
 ]
 
