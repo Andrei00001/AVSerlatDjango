@@ -15,7 +15,6 @@ class Profile_user(View):
         if request.user.is_authenticated:
             user_ava = Profile.objects.filter(user=request.user)
             user_post = Post.objects.order_by('-id').filter(user=request.user)
-
             comment = Comments.objects.filter(user=request.user)
             post_image = ImagePost.objects.all()
             context = {"title": "Акк",
@@ -35,11 +34,12 @@ class ProfilePeoples_user(View):
             friend = Friends.objects.filter(user=request.user).filter(friend=user)
             subscription = Subscriptions.objects.filter(user=request.user).filter(subscription=user)
             context = {"title": "Акк",
-                       "add_friend": "Удалить из друзей",
-                       "podpis": "Отписаться",
+                       "add_friend": "Добавить в друзья",
+                       "podpis": "Подписаться",
                        "users": user,
                        "posts": posts,
                        }
+
             if friend:
                 if not subscription:
                     context = {"title": "Акк",
@@ -48,14 +48,23 @@ class ProfilePeoples_user(View):
                                "users": user,
                                "posts": posts,
                                }
+                else:
+                    context = {"title": "Акк",
+                               "add_friend": "Удалить из друзей",
+                               "podpis": "Отписаться",
+                               "users": user,
+                               "posts": posts,
+                               }
 
             else:
-                context = {"title": "Акк",
-                           "add_friend": "Добавить в друзья",
-                           "podpis": "Подписаться",
-                           "users": user,
-                           "posts": posts,
-                           }
+                if subscription:
+                    context = {"title": "Акк",
+                               "add_friend": "Добавить в друзья",
+                               "podpis": "Отписаться",
+                               "users": user,
+                               "posts": posts,
+                               }
+
             return render(request, "people_app/people_profile.html", context)
         return redirect("login")
 
@@ -64,10 +73,22 @@ class AddFriend(View):
     def get(self, request, peopl):
         if request.user.is_authenticated:
             friend = User.objects.get(username=peopl)
-            Friends(user=request.user, friend=friend).save()
+            Friends(user=request.user, friend=friend, confirmation=False).save()
+            return redirect("friends")
+        return redirect("login")
+
+
+class ConfirmationFriend(View):
+    def get(self, request, peopl):
+        if request.user.is_authenticated:
+            friend = User.objects.get(username=peopl)
+            Friends(user=request.user, friend=friend, confirmation=True).save()
+            a_friend = Friends.objects.get(friend=request.user, user=friend)
+            a_friend.confirmation = True
+            a_friend.save()
             Subscriptions(user=request.user, subscription=friend).save()
             Subscriptions(user=friend, subscription=request.user).save()
-            return redirect(f'/profile/{peopl}')
+            return redirect("friends")
         return redirect("login")
 
 
@@ -93,7 +114,9 @@ class DelFriend(View):
     def get(self, request, peopl):
         if request.user.is_authenticated:
             friend = User.objects.get(username=peopl)
+            Friends.objects.filter(user=friend, friend=request.user).delete()
             Friends.objects.filter(user=request.user, friend=friend).delete()
             Subscriptions.objects.filter(user=request.user, subscription=friend).delete()
-            return redirect(f'/profile/{peopl}')
+            Subscriptions.objects.filter(user=friend, subscription=request.user).delete()
+            return redirect("friends")
         return redirect("login")

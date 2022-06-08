@@ -13,8 +13,10 @@ class User(AbstractUser):
 class Friends(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friend")
+    confirmation = models.BooleanField(default=True)
 
 
 class Subscriptions(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     subscription = models.ForeignKey(User, on_delete=models.CASCADE, related_name="subscription")
+

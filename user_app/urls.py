@@ -34,6 +34,8 @@ urlpatterns = [
     path('friends/', Friends_user.as_view(), name='friends'),
 
 
+
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
