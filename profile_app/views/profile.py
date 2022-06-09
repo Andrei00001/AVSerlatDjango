@@ -1,5 +1,6 @@
 from lib2to3.fixes.fix_input import context
 
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -31,8 +32,8 @@ class ProfilePeoples_user(View):
         if request.user.is_authenticated:
             user = User.objects.get(username=peopl)
             posts = Post.objects.filter(user=user)
-            friend = Friends.objects.filter(user=request.user).filter(friend=user)
-            subscription = Subscriptions.objects.filter(user=request.user).filter(subscription=user)
+            friend = Friends.objects.filter(Q(user=request.user) | Q(friend=request.user))
+            subscription = Subscriptions.objects.filter(Q(user=request.user) | Q(subscription=request.user))
             context = {"title": "Акк",
                        "add_friend": "Добавить в друзья",
                        "podpis": "Подписаться",
@@ -82,12 +83,10 @@ class ConfirmationFriend(View):
     def get(self, request, peopl):
         if request.user.is_authenticated:
             friend = User.objects.get(username=peopl)
-            Friends(user=request.user, friend=friend, confirmation=True).save()
             a_friend = Friends.objects.get(friend=request.user, user=friend)
             a_friend.confirmation = True
             a_friend.save()
             Subscriptions(user=request.user, subscription=friend).save()
-            Subscriptions(user=friend, subscription=request.user).save()
             return redirect("friends")
         return redirect("login")
 
@@ -105,7 +104,13 @@ class DelSubscription(View):
     def get(self, request, peopl):
         if request.user.is_authenticated:
             subscription = User.objects.get(username=peopl)
-            Subscriptions.objects.filter(user=request.user, subscription=subscription).delete()
+
+            Subscriptions.objects.filter(
+                Q(user=request.user, subscription=subscription)
+                |
+                Q(subscription=request.user, user=subscription)
+            ).delete()
+
             return redirect(f'/profile/{peopl}')
         return redirect("login")
 
@@ -114,9 +119,10 @@ class DelFriend(View):
     def get(self, request, peopl):
         if request.user.is_authenticated:
             friend = User.objects.get(username=peopl)
-            Friends.objects.filter(user=friend, friend=request.user).delete()
-            Friends.objects.filter(user=request.user, friend=friend).delete()
-            Subscriptions.objects.filter(user=request.user, subscription=friend).delete()
-            Subscriptions.objects.filter(user=friend, subscription=request.user).delete()
+            Friends.objects.filter(
+                Q(user=request.user, friend=friend)
+                |
+                Q(user=friend, friend=request.user)
+            ).delete()
             return redirect("friends")
         return redirect("login")
