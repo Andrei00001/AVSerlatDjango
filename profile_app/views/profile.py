@@ -30,7 +30,7 @@ class Profile_user(View):
 class ProfilePeoples_user(View):
     def get(self, request, peopl):
         if request.user.is_authenticated:
-            user = User.objects.get(username=peopl)
+            user = User.objects.get(Q(email=peopl) | Q(username=peopl))
             posts = Post.objects.filter(user=user)
             friend = Friends.objects.filter(Q(user=request.user) | Q(friend=request.user))
             subscription = Subscriptions.objects.filter(Q(user=request.user) | Q(subscription=request.user))
@@ -73,7 +73,7 @@ class ProfilePeoples_user(View):
 class AddFriend(View):
     def get(self, request, peopl):
         if request.user.is_authenticated:
-            friend = User.objects.get(username=peopl)
+            friend = User.objects.get(email=peopl)
             Friends(user=request.user, friend=friend, confirmation=False).save()
             return redirect("friends")
         return redirect("login")
@@ -86,7 +86,9 @@ class ConfirmationFriend(View):
             a_friend = Friends.objects.get(friend=request.user, user=friend)
             a_friend.confirmation = True
             a_friend.save()
-            Subscriptions(user=request.user, subscription=friend).save()
+            subscriptions = Subscriptions.objects.get(Q(subscription=friend) | Q(user=friend))
+            if not subscriptions:
+                Subscriptions(user=request.user, subscription=friend).save()
             return redirect("friends")
         return redirect("login")
 
@@ -94,7 +96,7 @@ class ConfirmationFriend(View):
 class AddSubscription(View):
     def get(self, request, peopl):
         if request.user.is_authenticated:
-            subscription = User.objects.get(username=peopl)
+            subscription = User.objects.get(email=peopl)
             Subscriptions(user=request.user, subscription=subscription).save()
             return redirect(f'/profile/{peopl}')
         return redirect("login")
@@ -103,7 +105,7 @@ class AddSubscription(View):
 class DelSubscription(View):
     def get(self, request, peopl):
         if request.user.is_authenticated:
-            subscription = User.objects.get(username=peopl)
+            subscription = User.objects.get(email=peopl)
 
             Subscriptions.objects.filter(
                 Q(user=request.user, subscription=subscription)
@@ -118,7 +120,7 @@ class DelSubscription(View):
 class DelFriend(View):
     def get(self, request, peopl):
         if request.user.is_authenticated:
-            friend = User.objects.get(username=peopl)
+            friend = User.objects.get(Q(email=peopl) | Q(username=peopl))
             Friends.objects.filter(
                 Q(user=request.user, friend=friend)
                 |

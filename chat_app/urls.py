@@ -14,11 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.urls import path
+from django.urls import path, include
 
+from chat_app.api.views.router import api_router
 from chat_app.views.chat_massege import Chat_page
 
 urlpatterns = [
     path('friends/chat/<str:username>', Chat_page.as_view(), name='friends_chat'),
-
+    path('api/', include(api_router.urls)),
 ]

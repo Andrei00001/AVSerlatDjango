@@ -1,14 +1,10 @@
-from django.db.models import Avg, Count, Q
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views import View
 
 from chat_app.form.massage import MassageForm
 from chat_app.models import Chat
-from comments_app.models import Comments
-from hashtag_app.models import Tags
-from posts_app.models import Post, ImagePost
-from comments_app.form.add_comments_main_page_form import AddCommentsForm
-from user_app.models import Subscriptions, Friends, User
+from user_app.models import User
 
 
 class Chat_page(View):

@@ -3,3 +3,7 @@ Pillow==9.1.0
 djangorestframework==3.13.1
 drf-spectacular ==0.22.1
 channels==3.0.4
+celery==3.1.24
+django-celery-results ==2.3.1
+django-redis == 5.2.0
+redis

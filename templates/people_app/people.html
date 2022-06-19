@@ -13,15 +13,20 @@
 <body>
 
     {% for peopl in people%}
-    <a href="{% url 'profile_peoples' peopl %}"><div>
+    <div>
+    <a href="{% url 'profile_peoples' peopl.user.username %}">
         {% if peopl.profile.image %}
          <img src="{{ peopl.profile.image.url }}" style="border-radius: 20px;" class="mr-3" alt="" width="50px" height="50px">
         {% else %}
         <img src="/static/profile_app/image/def.jpg" style="border-radius: 20px;" class="mr-3" alt="" width="50px" height="50px">
         {% endif %}
-        {{ peopl.first_name }} {{ peopl.last_name }}
+        {{ peopl.user.first_name }} {{ peopl.user.last_name }}</a>
 
-    </div></a>
+
+   <a href="{% url 'friends_chat' peopl.user.username %}">
+        <button type="submit" class="btn btn-info">Написать</button>
+    </a>
+    </div>
     {% endfor%}
 
 
