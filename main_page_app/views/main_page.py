@@ -11,43 +11,39 @@ from user_app.models import Subscriptions, Friends
 
 class Main_page(View):
     def get(self, request):
-        if request.user.is_authenticated:
-            friends = Subscriptions.objects.filter(Q(user=request.user) | Q(subscription=request.user))
-            people = (Friends.objects.annotate(count=Count("user")).order_by("-count"))[:5]
-            if friends:
-                for friend in friends:
-                    post_friend = (Post.objects.order_by("-id").filter(user=friend.subscription, is_public=True))
-                    tags = Tags.objects.annotate(count=Count("posttags")).order_by("-count")[:5]
-                    image_post = ImagePost.objects.all()
-                    comment = Comments.objects.order_by("created_at").all()
-                    form = AddCommentsForm()
-                    if post_friend:
-                        context = {"title": "дороу", "post_friend": post_friend, "comments": comment, "form": form,
-                                   "image_post": image_post,
-                                   "tags": tags}
-                    else:
-                        context = {"title": "дороу", "text": "Нету постов подпишись что их стало больше:",
-                                   "people": people}
-            else:
-                context = {"title": "дороу", "text": "Подпишись на них они самые популярные социопат чёртов:",
-                           "people": people}
-            return render(request, "main_page_app/main_page.html", context)
-        return redirect("login")
+
+        friends = Subscriptions.objects.filter(Q(user=request.user) | Q(subscription=request.user))
+        people = (Friends.objects.annotate(count=Count("user")).order_by("-count"))[:5]
+        if friends:
+            for friend in friends:
+                post_friend = (Post.objects.order_by("-id").filter(user=friend.subscription, is_public=True))
+                tags = Tags.objects.annotate(count=Count("posttags")).order_by("-count")[:5]
+                image_post = ImagePost.objects.all()
+                comment = Comments.objects.order_by("created_at").all()
+                form = AddCommentsForm()
+                if post_friend:
+                    context = {"title": "дороу", "post_friend": post_friend, "comments": comment, "form": form,
+                               "image_post": image_post,
+                               "tags": tags}
+                else:
+                    context = {"title": "дороу", "text": "Нету постов подпишись что их стало больше:",
+                               "people": people}
+        else:
+            context = {"title": "дороу", "text": "Подпишись на них они самые популярные социопат чёртов:",
+                       "people": people}
 
     def post(self, request):
-        if request.user.is_authenticated:
-            new_request = request.POST.copy()
-            new_request['user'] = request.user.id
-            new_request['post_id'] = new_request['post.id']
-            form = AddCommentsForm(new_request, request.FILES)
-            if form.is_valid():
-                form.save()
-                return redirect("main_page")
-            print(form.errors)
-            context = {
-                "title": "Добавить пост",
-                "form": form
-            }
-            return render(request, "./main_page.html", context)
 
-        return redirect("login")
+        new_request = request.POST.copy()
+        new_request['user'] = request.user.id
+        new_request['post_id'] = new_request['post.id']
+        form = AddCommentsForm(new_request, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("main_page")
+        print(form.errors)
+        context = {
+            "title": "Добавить пост",
+            "form": form
+        }
+        return render(request, "./main_page.html", context)

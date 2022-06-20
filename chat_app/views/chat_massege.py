@@ -16,14 +16,11 @@ class Chat_page(View):
         return render(request, "chat_app/chat.html", context)
 
     def post(self, request, username):
-        if request.user.is_authenticated:
-            new_request = request.POST.copy()
-            new_request['sending_user'] = request.user.id
-            host_user = User.objects.get(username=username)
-            new_request['host_user'] = host_user
-            form = MassageForm(new_request, request.FILES)
-            if form.is_valid():
-                form.save()
-                return redirect(f"/friends/chat/{username}")
-
-        return redirect("login")
+        new_request = request.POST.copy()
+        new_request['sending_user'] = request.user.id
+        host_user = User.objects.get(username=username)
+        new_request['host_user'] = host_user
+        form = MassageForm(new_request, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(f"/friends/chat/{username}")

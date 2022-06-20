@@ -10,17 +10,14 @@ class UpdatePost(View):
     ImageFormSet = modelformset_factory(ImagePost, fields={"image", })
 
     def get(self, request, pk):
-        if request.user.is_authenticated:
-            get_post = Post.objects.get(pk=pk)
-            post_form = UpdatePostForm(instance=get_post)
-            # get_image = ImagePost.objects.filter(post_image_id=pk)
-            image_form = self.ImageFormSet(queryset=ImagePost.objects.filter(post_image=get_post))
-            # for obj in get_image:
-            #     image_form.append(UpdateImagePostForm(instance=obj))
 
-            context = {"title": "Добавить пост", "form": post_form, "photo_form": image_form}
-            return render(request, "posts_app/update_post.html", context)
-        return redirect("login")
+        get_post = Post.objects.get(pk=pk)
+        post_form = UpdatePostForm(instance=get_post)
+
+        image_form = self.ImageFormSet(queryset=ImagePost.objects.filter(post_image=get_post))
+
+        context = {"title": "Добавить пост", "form": post_form, "photo_form": image_form}
+        return render(request, "posts_app/update_post.html", context)
 
     def post(self, request, pk):
         get_post = Post.objects.get(pk=pk)
@@ -42,11 +39,6 @@ class UpdatePost(View):
                         obj_img = ImagePost.objects.get(id=get_image[i].id)
                         obj_img.image = image.image
                         obj_img.save()
-            # for i, obj in enumerate(file):
-            #     print(get_image[i].id)
-            #     get = ImagePost.objects.get(id=get_image[i].id)
-            #     get.image = file[i]
-            #     get.save()
             return redirect("profile")
         else:
 

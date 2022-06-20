@@ -14,8 +14,8 @@ class PostImageAdmin(admin.StackedInline):
 
     def get_image(self, obj):
         if obj.image:
-            return mark_safe(f"<a href={obj.image.url}>"
-                             f"<img src={obj.image.url} width='50' height='50'>"
+            return mark_safe(f"<a href={obj.image.url} target='_blank'>"
+                             f"<img src={obj.image.url} width='100' height='100'>"
                              f"</a>")
 
     get_image.short_description = "Фото к посту"

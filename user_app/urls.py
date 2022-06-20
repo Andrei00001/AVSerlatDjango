@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 from django.views.generic import TemplateView
@@ -34,14 +35,11 @@ urlpatterns = [
     path('register/', RegisterUser.as_view(), name='register'),
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', Logout_user.as_view(), name='logout'),
-    path('friends/', Friends_user.as_view(), name='friends'),
-    path('verify_email/<uidb64>/<token>/', EmailVerify.as_view(), name='verify_email',),
+    path('friends/', login_required(Friends_user.as_view()), name='friends'),
+    path('verify_email/<uidb64>/<token>/', EmailVerify.as_view(), name='verify_email', ),
     path('confirm_email/', TemplateView.as_view(template_name='user_app/confirm_email.html'), name='confirm_email'),
     path('invalid_verify/', TemplateView.as_view(template_name='user_app/invalid_verify.html'), name='invalid_verify'),
     path('api/', include(api_router.urls)),
-
-
-
 
 ]
 

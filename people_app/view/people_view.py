@@ -8,8 +8,6 @@ from user_app.models import User
 
 class PeopleView(View):
     def get(self, request):
-        if request.user.is_authenticated:
-            people = Profile.objects.exclude(user=request.user).filter(email_verify=True)
-            context = {"title": "Люди", "people": people}
-            return render(request, "people_app/people.html", context)
-        return redirect("login")
+        people = Profile.objects.exclude(user=request.user).filter(email_verify=True)
+        context = {"title": "Люди", "people": people}
+        return render(request, "people_app/people.html", context)

@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
+from django.contrib.auth.decorators import login_required
 from django.urls import path
 
 from hashtag_app.api.views.hashtag import TagsView
@@ -23,8 +23,8 @@ from hashtag_app.views.tags import PostTag
 
 
 urlpatterns = [
-    path('tag_cloud/', PostTagCloud.as_view(), name='tag_cloud'),
-    path('tag_post/<str:tag>/', PostTag.as_view(), name='post_tags'),
+    path('tag_cloud/', login_required(PostTagCloud.as_view()), name='tag_cloud'),
+    path('tag_post/<str:tag>/', login_required(PostTag.as_view()), name='post_tags'),
     path('api/tag_post/<str:tag>/', TagsPostView.as_view(), name='tags_post'),
     path('api/tag', TagsView.as_view({"get": "list", "post": "create"}), name='tag_page'),
 

@@ -12,8 +12,7 @@ from user_app.tasks import send_email_for_verify
 
 class RegisterUser(CreateView):
     def get(self, request):
-        if request.user.is_authenticated:
-            return redirect('posts')
+
         form = RegisterUserForms
         context = {
             'title': 'Регистрация ',

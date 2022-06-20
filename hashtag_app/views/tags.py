@@ -11,7 +11,7 @@ from comments_app.form.add_comments_main_page_form import AddCommentsForm
 
 class PostTag(View):
     def get(self, request, tag):
-        if request.user.is_authenticated:
+
             tag = Tags.objects.get(tag=tag)
             posts_tag = PostTags.objects.filter(tag=tag).order_by("-id").all()
             image_post = ImagePost.objects.all()
@@ -21,7 +21,7 @@ class PostTag(View):
                        "image_post": image_post,
                        }
             return render(request, "hashtag/hashtag_page.html", context)
-        return redirect("login")
+
 
     def post(self, request, tag):
         new_request = request.POST.copy()

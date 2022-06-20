@@ -7,10 +7,8 @@ from django.views import View
 from posts_app.models import Post
 
 
-class DeletePpost(View):
+class DeletePost(View):
     def get(self, request, pk):
-        if request.user.is_authenticated:
-            get_post = Post.objects.get(pk=pk)
-            get_post.delete()
-            return redirect(reverse('profile'))
-        return redirect("login")
+        get_post = Post.objects.get(pk=pk)
+        get_post.delete()
+        return redirect(reverse('profile'))

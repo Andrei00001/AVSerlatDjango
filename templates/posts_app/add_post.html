@@ -7,6 +7,9 @@
 <body>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    {% if error %}
+        <h1 style="color:red ">{{ error }}</h1>
+    {% endif %}
     <h6>{{ form.non_field_errors }}</h6>
     {% for f in form.visible_fields  %}
         {% if f != form.user%}

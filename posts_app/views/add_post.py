@@ -9,27 +9,33 @@ from posts_app.forms.add_image_post import AddImagePostForm
 
 class AddPost(View):
     def get(self, request):
-        if request.user.is_authenticated:
-            form = AddImagePostForm()
-            context = {"title": "Добавить пост", "form": form}
-            return render(request, "posts_app/add_post.html", context)
-        return redirect("login")
+        form = AddImagePostForm()
+        context = {"title": "Добавить пост", "form": form}
+        return render(request, "posts_app/add_post.html", context)
 
     def post(self, request):
-        form = AddImagePostForm(request.POST or None, request.FILES or None)
+        form = AddImagePostForm(request.POST, request.FILES)
         files = request.FILES.getlist('image')
+
+        if len(files) > 4:
+            context = {"title": "Добавить пост", "form": form, "error": "Разрешено грузить не более 4 фотак"}
+            return render(request, "posts_app/add_post.html", context)
+
         if form.is_valid():
-            user = request.user
-            title = form.cleaned_data['title']
-            text = form.cleaned_data['text']
-            is_public = form.cleaned_data['is_public']
-            post_obj = Post.objects.create(user=user, title=title, text=text, is_public=is_public)
+            post_obj = Post.objects.create(
+                user=request.user,
+                title=form.cleaned_data['title'],
+                text=form.cleaned_data['text'],
+                is_public=form.cleaned_data['is_public']
+            )
+
             for f in files:
                 ImagePost.objects.create(post_image=post_obj, image=f)
             return redirect("profile")
-        print(form.errors)
+
         context = {
             "title": "Добавить пост",
             "form": form
         }
+
         return render(request, "posts_app/add_post.html", context)
