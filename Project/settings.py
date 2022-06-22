@@ -126,6 +126,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOGIN_URL = '/login'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
@@ -143,7 +144,7 @@ REST_FRAMEWORK = {
     # YOUR SETTINGS
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 1
+    'PAGE_SIZE': 1000
 }
 
 SPECTACULAR_SETTINGS = {

@@ -14,9 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib.auth.decorators import login_required
-from django.urls import path
+from django.urls import path, include
 
 from hashtag_app.api.views.hashtag import TagsView
+from hashtag_app.api.views.router import api_router
 from hashtag_app.api.views.tag_post import TagsPostView
 from hashtag_app.views.cloud import PostTagCloud
 from hashtag_app.views.tags import PostTag
@@ -26,7 +27,8 @@ urlpatterns = [
     path('tag_cloud/', login_required(PostTagCloud.as_view()), name='tag_cloud'),
     path('tag_post/<str:tag>/', login_required(PostTag.as_view()), name='post_tags'),
     path('api/tag_post/<str:tag>/', TagsPostView.as_view(), name='tags_post'),
-    path('api/tag', TagsView.as_view({"get": "list", "post": "create"}), name='tag_page'),
+    path('api/', include(api_router.urls)),
+
 
 ]
 

@@ -15,5 +15,5 @@ class Tags(models.Model):
 
 
 class PostTags(models.Model):
-    tag = models.ForeignKey(Tags, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tags, on_delete=models.CASCADE, related_name="post_tag")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="tag_post")

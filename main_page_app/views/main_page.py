@@ -17,7 +17,7 @@ class Main_page(View):
         if friends:
             for friend in friends:
                 post_friend = (Post.objects.order_by("-id").filter(user=friend.subscription, is_public=True))
-                tags = Tags.objects.annotate(count=Count("posttags")).order_by("-count")[:5]
+                tags = Tags.objects.annotate(count=Count("post_tag")).order_by("-count")[:5]
                 image_post = ImagePost.objects.all()
                 comment = Comments.objects.order_by("created_at").all()
                 form = AddCommentsForm()
@@ -31,6 +31,8 @@ class Main_page(View):
         else:
             context = {"title": "дороу", "text": "Подпишись на них они самые популярные социопат чёртов:",
                        "people": people}
+
+        return render(request, "main_page_app/main_page.html", context)
 
     def post(self, request):
 
