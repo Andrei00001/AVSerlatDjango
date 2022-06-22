@@ -10,7 +10,10 @@ from user_app.models import User
 class Chat_page(View):
     def get(self, request, username):
         username = User.objects.get(username=username)
-        chat = Chat.objects.filter(Q(sending_user=request.user) | Q(sending_user=username)).order_by("created_at")
+        chat = Chat.objects.filter(
+            (Q(sending_user=request.user) & Q(host_user=username)) |
+            (Q(sending_user=username) & Q(host_user=request.user))
+        ).order_by("created_at")
         form = MassageForm()
         context = {"title": "дороу", "form": form, "chat": chat}
         return render(request, "chat_app/chat.html", context)
