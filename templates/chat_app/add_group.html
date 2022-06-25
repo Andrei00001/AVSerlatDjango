@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h6>{{ form.non_field_errors }}</h6>
+    {% for f in form.visible_fields  %}
+
+        <p>{{ f.label }} {{ f }}</p>
+        <p>{{ f.errors }}</p>
+    {% endfor %}
+    <button type="submit">Добавить</button>
+</form>
+
+
+</body>
+</html>

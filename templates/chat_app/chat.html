@@ -15,9 +15,19 @@
 
     {% for item in chat %}
         <div>
+            {% if item.text %}
+                {{ item.text }}
+            {% endif %}
 
-            {{ item.text }}|
+            {% if item.image %}
+                <img src="{{ item.image.url }}" class="mr-3" alt="" width="100px" height="100px">
+            {% endif %}|
             {{ item.sending_user.first_name }} {{ item.sending_user.last_name }}
+            {% if item.sending_user.profile.image %}
+                         <img src="{{ item.sending_user.profile.image.url }}" style="border-radius: 20px;" class="mr-3" alt="" width="50px" height="50px">
+                    {% else %}
+                        <img src="/static/profile_app/image/def.jpg" style="border-radius: 20px;" class="mr-3" alt="" width="50px" height="50px">
+                    {% endif %}
         </div>
     {% endfor %}
 

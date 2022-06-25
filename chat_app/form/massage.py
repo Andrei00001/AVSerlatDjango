@@ -4,12 +4,15 @@ from chat_app.models import Chat
 
 
 class MassageForm(forms.ModelForm):
+    image = forms.ImageField(label='Выберите фото',
+                             required=False,
+                             widget=forms.FileInput(attrs={'multiple': 'multiple'})
+                             )
+
     class Meta:
         model = Chat
-        fields = ["text", "sending_user", "host_user"]
+        fields = ["text","image"]
         widgets = {
             "text": forms.TextInput(attrs={"cols": 100, "rows": 15}),
-            "sending_user": forms.HiddenInput(),
-            "host_user": forms.HiddenInput(),
 
         }

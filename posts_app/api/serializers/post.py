@@ -10,7 +10,7 @@ from profile_app.api.serializers.profile import UserSerializer
 class PostImgSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImagePost
-        fields = "image",
+        fields = "image", "post_image"
 
 
 class TagsSerializer(serializers.ModelSerializer):
@@ -45,6 +45,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = "__all__"
+
         extra_kwargs = {
             "file": {
                 "required": True,
@@ -54,7 +55,7 @@ class PostSerializer(serializers.ModelSerializer):
 
         }
 
-    # publisher_user = serializers.HiddenField(
-    #     default=serializers.CurrentUserDefault(),
-    #     source="user",
-    # )
+    publisher_user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault(),
+        source="user",
+    )

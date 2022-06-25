@@ -17,9 +17,13 @@ from django.contrib.auth.decorators import login_required
 from django.urls import path, include
 
 from chat_app.api.views.router import api_router
+from chat_app.views.add_group_chat import AddGroup
 from chat_app.views.chat_massege import Chat_page
+from chat_app.views.you_chats import Chats
 
 urlpatterns = [
     path('friends/chat/<str:username>', login_required(Chat_page.as_view()), name='friends_chat'),
+    path('chats/', login_required(Chats.as_view()), name='you_chats'),
+    path('chats/add_groups', login_required(AddGroup.as_view()), name='add_groups'),
     path('api/', include(api_router.urls)),
 ]

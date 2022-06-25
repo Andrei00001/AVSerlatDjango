@@ -19,11 +19,21 @@ class Chat_page(View):
         return render(request, "chat_app/chat.html", context)
 
     def post(self, request, username):
-        new_request = request.POST.copy()
-        new_request['sending_user'] = request.user.id
-        host_user = User.objects.get(username=username)
-        new_request['host_user'] = host_user
-        form = MassageForm(new_request, request.FILES)
+        form = MassageForm(request.POST)
+        files = request.FILES.getlist('image')
+
         if form.is_valid():
-            form.save()
+            for i, file in enumerate(files):
+                message = Chat(
+                    sending_user=request.user,
+                    host_user=User.objects.get(username=username),
+                    text=form.cleaned_data['text'],
+                    image=file
+                )
+                if i == 0:
+                    message.save()
+                else:
+                    message.text = None
+                    message.save()
             return redirect(f"/friends/chat/{username}")
+        print(form.errors)
