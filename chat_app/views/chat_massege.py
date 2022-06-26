@@ -23,17 +23,23 @@ class Chat_page(View):
         files = request.FILES.getlist('image')
 
         if form.is_valid():
-            for i, file in enumerate(files):
-                message = Chat(
-                    sending_user=request.user,
-                    host_user=User.objects.get(username=username),
-                    text=form.cleaned_data['text'],
-                    image=file
-                )
-                if i == 0:
-                    message.save()
-                else:
-                    message.text = None
-                    message.save()
+            message = Chat(
+                sending_user=request.user,
+                host_user=User.objects.get(username=username),
+                text=form.cleaned_data['text'],
+            )
+            if files:
+                for i, file in enumerate(files):
+                    message = Chat(
+                        sending_user=request.user,
+                        host_user=User.objects.get(username=username),
+                        text=form.cleaned_data['text'],
+                        image=file
+                    )
+                    if i == 0:
+                        message.save()
+                    else:
+                        message.text = None
+                        message.save()
+            message.save()
             return redirect(f"/friends/chat/{username}")
-        print(form.errors)

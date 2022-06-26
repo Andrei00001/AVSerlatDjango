@@ -1,0 +1,53 @@
+
+{% load menu_main %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">{% main_menu %}</div>
+    <div id="user_menu" class="navbar-text">{% user_menu %}</div>
+</nav>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for item in text %}
+    <div>
+        {% if item.image %}
+                <img src="{{ item.image.url }}" class="mr-3" alt="" width="100px" height="100px">
+        {% endif %}
+        {% if item.text %}
+            {{item.text}}
+        {% endif %}
+            |{{item.user.last_name}}{{item.user.first_name}}
+            {% if item.user.profile.image %}
+                        <img src="{{ item.user.profile.image.url }}" style="border-radius: 20px;" class="mr-3" alt="" width="50px" height="50px">
+                    {% else %}
+                        <img src="/static/profile_app/image/def.jpg" style="border-radius: 20px;" class="mr-3" alt="" width="50px" height="50px">
+                    {% endif %}
+    </div>
+    {% endfor %}
+
+    {% if add == False %}
+    <div>
+        <a href="{% url 'add_user_group' group %}">
+        <button type="submit" class="btn btn-info">Вступить</button>
+        </a>
+    </div>
+    {% elif add == True %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h6>{{ form.non_field_errors }}</h6>
+            {% for f in form.visible_fields  %}
+                <p>Текст сообщения: {{ f }}</p>
+            {% endfor %}
+            <button type="submit" class="btn btn-info">Отправить</button>
+        </form>
+
+         <a href="{% url 'groups_folder' group %}">
+            <button type="submit" class="btn btn-info">Добавить в папку</button>
+        </a>
+    {% endif %}
+</body>
+</html>

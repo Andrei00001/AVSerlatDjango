@@ -13,10 +13,9 @@ class AddGroup(View):
 
     def post(self, request):
         form = GroupNameForm(request.POST, request.FILES)
-
         if form.is_valid():
             new = request.POST.copy()
             form.save()
-            chat_name = ChatGroupsName.objects.get(name=new['name'])
+            chat_name = ChatGroupsName.objects.get(title=new['title'])
             ChatGroups.objects.create(user=request.user, group=chat_name, owner=True)
             return redirect(f"/chats/")

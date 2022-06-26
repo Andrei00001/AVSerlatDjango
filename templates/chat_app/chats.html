@@ -11,15 +11,46 @@
     <title>{{ title }}</title>
 </head>
 <body>
+     {% block search %}
+                {% include 'chat_app/include/_search.html' %}
+        {% endblock %}
+    <h4>Ваши папки</h4>
+
+    {% for d, i in ddd.items %}
+    <details style="padding: 10px;">
+         <summary>{{d.name}}</summary>
+                 <ul class="list-group list-group-flush">
+                {% for q in i %}
+                        <a href="{% url 'groups_chat' q.group.pk %}">
+                            <div>
+
+                        <li class="list-group-item">
+                             <img src="{{ q.group.image.url }}" style="border-radius: 20px;" class="mr-3" alt="" width="50px" height="50px">
+                            {{ q.group.title }}
+                        </li>
+                                </div>
+                        </a>
+                {% endfor%}
+                </ul>
+    </details>
+    {% endfor %}
+     <h4>Ваши группы</h4>
+
     {% for group in groups %}
+    <a href="{% url 'groups_chat' group.pk %}">
     <div>
         <img src="{{ group.image.url }}" style="border-radius: 20px;" class="mr-3" alt="" width="50px" height="50px">
-        {{ group.name }}
+        {{ group.title }}
     </div>
+    </a>
     {% endfor %}
 
     <a href="{% url 'add_groups'  %}">
         <button type="submit" class="btn btn-info">Создать группу</button>
+    </a>
+
+    <a href="{% url 'add_folder'  %}">
+        <button type="submit" class="btn btn-info">Создать папку групп</button>
     </a>
     {% for peoples in chats%}
         <div>

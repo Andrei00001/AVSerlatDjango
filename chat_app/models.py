@@ -14,13 +14,31 @@ class Chat(models.Model):
     image = models.ImageField(null=True, blank=True, verbose_name="Фото чата")
 
 
+class FolderChatGroups(models.Model):
+    name = models.CharField(max_length=1024, null=False, blank=False, verbose_name="Имя папки", unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="users_folder")
+
+
 class ChatGroupsName(models.Model):
-    name = models.CharField(max_length=1024, null=True, blank=True, verbose_name="Имя группы", unique=True)
+    title = models.CharField(max_length=1024, null=False, blank=False, verbose_name="Имя группы", unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(null=False, blank=False, verbose_name="Фото группы")
+
+
+class FolderGroups(models.Model):
+    folder = models.ForeignKey(FolderChatGroups, on_delete=models.CASCADE, related_name="group_folder")
+    group = models.OneToOneField(ChatGroupsName, on_delete=models.CASCADE, related_name="folder_group")
 
 
 class ChatGroups(models.Model):
     owner = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_in_group")
     group = models.ForeignKey(ChatGroupsName, on_delete=models.CASCADE, related_name="group_user")
+
+
+class ChatInGroups(models.Model):
+    text = models.CharField(max_length=1024, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="users_in_group")
+    group = models.ForeignKey(ChatGroupsName, on_delete=models.CASCADE, related_name="group_users")
+    image = models.ImageField(null=True, blank=True, verbose_name="Фото чата")
