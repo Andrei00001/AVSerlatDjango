@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
+DATABASE_URL = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
@@ -165,7 +165,7 @@ CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
 
 
-if "DATABASE_URL" in os.environ:
-    import dj_database_url
-
-    DATABASES = {"default": dj_database_url.config()}
+# if "DATABASE_URL" in os.environ:
+#     import dj_database_url
+#
+#     DATABASES = {"default": dj_database_url.config()}
