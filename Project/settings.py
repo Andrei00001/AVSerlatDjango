@@ -165,7 +165,7 @@ CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
 
 
-if "DATABASE_URL" in os.getenv:
+if "DATABASE_URL" in os.environ:
     import dj_database_url
 
     DATABASES = {"default": dj_database_url.config()}
