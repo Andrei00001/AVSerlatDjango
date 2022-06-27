@@ -12,9 +12,12 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
-import dj_database_url
+
 from django.conf.global_settings import DATABASES
 from dotenv import load_dotenv
+import django_heroku
+
+django_heroku.settings(locals())
 
 load_dotenv()
 env_path = Path('.') / '.env'
