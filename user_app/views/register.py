@@ -30,7 +30,7 @@ class RegisterUser(CreateView):
             current_site = get_current_site(request)
             # Получаем домен перед передачей в celery так как celery может принимать только конкретные значения
 
-            send_email_for_verify.delay(current_site.domain, user.id)
+            send_email_for_verify(current_site.domain, user.id)
 
             # EmailMessage(
             #     subject="asdf",
