@@ -163,3 +163,9 @@ EMAIL_USE_SSL = False
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
+
+
+if "DATABASE_URL" in os.getenv:
+    import dj_database_url
+
+    DATABASES = {"default": dj_database_url.config()}
