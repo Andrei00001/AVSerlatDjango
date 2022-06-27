@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
+import dj_database_url
+from django.conf.global_settings import DATABASES
 from dotenv import load_dotenv
-
-
 
 load_dotenv()
 env_path = Path('.') / '.env'
@@ -92,12 +92,12 @@ WSGI_APPLICATION = 'Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASE_URL = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASE_URL = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -164,8 +164,4 @@ CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
 
-
-# if "DATABASE_URL" in os.environ:
-#     import dj_database_url
-#
-#     DATABASES = {"default": dj_database_url.config()}
+DATABASES['default'] = dj_database_url.config(default=os.getenv('DATABASE_URL'))
