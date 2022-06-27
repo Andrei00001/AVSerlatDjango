@@ -8,7 +8,7 @@ from hashtag_app.models import Tags
 class PostTagCloud(View):
     def get(self, request):
 
-        tags = Tags.objects.annotate(count=Count("post_tags")).order_by("-count")
+        tags = Tags.objects.annotate(count=Count("post_tag")).order_by("-count")
         context = {"title": "Галерея #тэгов",
                    "tags": tags,
                    }
