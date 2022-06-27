@@ -17,7 +17,7 @@ from django.conf.global_settings import DATABASES
 from dotenv import load_dotenv
 import django_heroku
 
-django_heroku.settings(locals())
+
 
 load_dotenv()
 env_path = Path('.') / '.env'
@@ -135,8 +135,8 @@ USE_TZ = True
 LOGIN_URL = '/login'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfile")
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
@@ -169,3 +169,4 @@ CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
 
 # DATABASES['default'] = dj_database_url.config(default=os.getenv('DATABASE_URL'))
+django_heroku.settings(locals())
