@@ -24,7 +24,7 @@ class LikesCommentsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LikeComments
-        fields = "comment", "count_likes_comment", "user"
+        fields = "__all__"
 
     publisher_user = serializers.HiddenField(
         default=serializers.CurrentUserDefault(),
