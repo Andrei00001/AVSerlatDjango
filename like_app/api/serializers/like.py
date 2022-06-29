@@ -27,3 +27,14 @@ class LikesCommentsSerializer(serializers.ModelSerializer):
         default=serializers.CurrentUserDefault(),
         source="user",
     )
+
+
+class LikeCountCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LikeComments
+        fields = 'comment', "count_like"
+
+    count_like = serializers.SerializerMethodField()
+
+    def get_count_like(self, instance):
+        return instance.comment.count()
