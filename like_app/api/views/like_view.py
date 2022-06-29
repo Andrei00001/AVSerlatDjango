@@ -1,6 +1,7 @@
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin
 from rest_framework.viewsets import GenericViewSet
 
+from hashtag_app.api.serializers.hashtag import TagsCountSerializer
 from ..serializers.like import LikesSerializer, LikesCommentsSerializer
 from ...models import Like, LikeComments
 
@@ -10,7 +11,7 @@ class LikesViewSet(GenericViewSet, ListModelMixin, CreateModelMixin):
     queryset = Like.objects.all()
 
 
-class LikesCommentsViewSet(GenericViewSet, ListModelMixin,RetrieveModelMixin, CreateModelMixin):
+class LikesCommentsViewSet(GenericViewSet, ListModelMixin, CreateModelMixin):
     serializer_class = LikesCommentsSerializer
     queryset = LikeComments.objects.all()
     lookup_field = 'comment_id'

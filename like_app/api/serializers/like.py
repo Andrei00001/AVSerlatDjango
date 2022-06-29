@@ -18,7 +18,6 @@ class LikesSerializer(serializers.ModelSerializer):
 
 
 class LikesCommentsSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True, many=True)
     class Meta:
         model = LikeComments
         fields = "__all__"
