@@ -14,3 +14,4 @@ class LikesCommentsViewSet(GenericViewSet, ListModelMixin,RetrieveModelMixin, Cr
     serializer_class = LikesCommentsSerializer
     queryset = LikeComments.objects.all()
     lookup_field = 'comment_id'
+
