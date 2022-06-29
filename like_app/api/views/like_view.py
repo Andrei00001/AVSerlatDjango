@@ -5,11 +5,12 @@ from ..serializers.like import LikesSerializer, LikesCommentsSerializer
 from ...models import Like, LikeComments
 
 
-class LikesViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin):
+class LikesViewSet(GenericViewSet, ListModelMixin, CreateModelMixin):
     serializer_class = LikesSerializer
     queryset = Like.objects.all()
 
 
-class LikesCommentsViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin):
+class LikesCommentsViewSet(GenericViewSet, ListModelMixin, CreateModelMixin):
     serializer_class = LikesCommentsSerializer
     queryset = LikeComments.objects.all()
+    lookup_field = 'comment_id'
