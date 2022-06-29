@@ -10,7 +10,7 @@ class PostsView(GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelM
     serializer_class = PostSerializer
     queryset = Post.objects.all()
     action_serializer = {"retrieve": LikePostSerializer}
-    lookup_field = 'posts'
+
 
     def get_serializer_class(self):
         return self.action_serializer.get(self.action, self.serializer_class)
