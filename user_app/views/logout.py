@@ -1,9 +1,9 @@
 from django.contrib.auth import logout
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views import View
 
 
 class Logout_user(View):
-    def get(self, request):
+    def post(self, request):
         logout(request)
-        return redirect("login")
+        return render(request, "login")
