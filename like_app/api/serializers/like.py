@@ -17,7 +17,6 @@ class LikesSerializer(serializers.ModelSerializer):
 
 
 class LikesCommentsSerializer(serializers.ModelSerializer):
-    comment = CommentsSerializer()
 
     class Meta:
         model = LikeComments
