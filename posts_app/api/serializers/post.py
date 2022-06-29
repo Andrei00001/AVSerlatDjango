@@ -32,7 +32,12 @@ class LikePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Like
-        fields = "user",
+        fields = "user", "like_user"
+
+    like_user = serializers.SerializerMethodField()
+
+    def get_like_user(self, instance):
+        return instance.user.count()
 
 
 class PostSerializer(serializers.ModelSerializer):
