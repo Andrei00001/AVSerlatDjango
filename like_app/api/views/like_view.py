@@ -1,4 +1,5 @@
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin
+from django.db.migrations import DeleteModel
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin, DestroyModelMixin
 from rest_framework.viewsets import GenericViewSet
 
 from hashtag_app.api.serializers.hashtag import TagsCountSerializer
@@ -11,12 +12,12 @@ class LikesViewSet(GenericViewSet, ListModelMixin, CreateModelMixin):
     queryset = Like.objects.all()
 
 
-class LikesCommentsViewSet(GenericViewSet, ListModelMixin,RetrieveModelMixin, CreateModelMixin):
+class LikesCommentsViewSet(GenericViewSet, ListModelMixin,RetrieveModelMixin, CreateModelMixin,DestroyModelMixin):
     serializer_class = LikesCommentsSerializer
     queryset = LikeComments.objects.all()
     lookup_field = 'comment_id'
 
-    action_serializer = {"retrieve": LikeCountCommentSerializer}
+    # action_serializer = {"retrieve": LikeCountCommentSerializer}
 
-    def get_serializer_class(self):
-        return self.action_serializer.get(self.action, self.serializer_class)
+    # def get_serializer_class(self):
+    #     return self.action_serializer.get(self.action, self.serializer_class)
