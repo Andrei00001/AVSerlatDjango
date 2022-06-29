@@ -14,6 +14,8 @@ class LikeCommentsSerializer(serializers.ModelSerializer):
 
 
 class CommentsSerializer(serializers.ModelSerializer):
+    like_comment_user = LikeCommentsSerializer(many=True, read_only=True)
+
     count_likes_comment = serializers.SerializerMethodField()
 
     def get_count_likes_comment(self, instance):
@@ -21,7 +23,7 @@ class CommentsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comments
-        fields = "__all__"
+        fields = "text_comment", "post_id", "like_comment_user", "publisher_user",
         read_only_fields = "user",
 
     publisher_user = serializers.HiddenField(
