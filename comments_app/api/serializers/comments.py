@@ -21,7 +21,7 @@ class CommentsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comments
-        fields = "id","text_comment", "post_id", "publisher_user", "count_likes_comment",
+        fields = "id", "text_comment", "post_id", "publisher_user", "count_likes_comment",
         read_only_fields = "user",
 
     publisher_user = serializers.HiddenField(

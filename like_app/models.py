@@ -12,5 +12,5 @@ class Like(models.Model):
 
 
 class LikeComments(models.Model):
-    comment = models.ForeignKey(Comments, on_delete=models.CASCADE, related_name="like_comment_user", unique=True)
+    comment = models.ForeignKey(Comments, on_delete=models.CASCADE, related_name="like_comment_user")
     user = models.OneToOneField(User, on_delete=models.CASCADE)
