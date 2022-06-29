@@ -16,6 +16,11 @@ class LikeCommentsSerializer(serializers.ModelSerializer):
 class CommentsSerializer(serializers.ModelSerializer):
     like_comment_user = LikeCommentsSerializer(many=True, read_only=True)
 
+    count_likes_comment = serializers.SerializerMethodField()
+
+    def get_count_likes_comment(self, instance):
+        return instance.like_comment_user.count()
+
     class Meta:
         model = Comments
         fields = "__all__"
