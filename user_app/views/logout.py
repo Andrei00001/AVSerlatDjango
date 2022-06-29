@@ -4,6 +4,6 @@ from django.views import View
 
 
 class Logout_user(View):
-    def get(self, request):
+    def post(self, request):
         logout(request)
         return redirect("login")
