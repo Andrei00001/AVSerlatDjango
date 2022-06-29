@@ -10,7 +10,13 @@ class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="like_user", unique=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = (("post", "user"),)
+
 
 class LikeComments(models.Model):
     comment = models.ForeignKey(Comments, on_delete=models.CASCADE, related_name="like_comment_user")
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (("comment", "user"),)
