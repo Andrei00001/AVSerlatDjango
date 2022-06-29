@@ -14,7 +14,7 @@ class LikeCommentsSerializer(serializers.ModelSerializer):
 
 
 class CommentsSerializer(serializers.ModelSerializer):
-    like_comment_user = LikeCommentsSerializer(many=True, read_only=True)
+
 
     count_likes_comment = serializers.SerializerMethodField()
 
