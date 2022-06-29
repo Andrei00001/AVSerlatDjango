@@ -45,7 +45,10 @@ class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     tag_post = PostTagsSerializer(many=True, read_only=True)
     post_comments = CommentsSerializer(many=True, read_only=True)
-    like_user = LikePostSerializer(many=True, read_only=True)
+    count_likes = serializers.SerializerMethodField()
+
+    def get_count_likes(self, instance):
+        return instance.like_user.count()
 
     class Meta:
         model = Post
