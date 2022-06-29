@@ -13,11 +13,10 @@ def post_save_user(sender, instance, **kwargs):
         return False
     post = Post.objects.get(pk=instance.id)
 
-    tags = re.findall(r"#\w+", instance.text)
+    tags = set(re.findall(r"#\w+", instance.text))
     if tags:
         for tag in tags:
             z = Tags.objects.filter(tag=tag)
-            print(z)
             if not z:
                 tag_obj = Tags(tag=tag.lower())
                 tag_obj.save()
@@ -26,4 +25,4 @@ def post_save_user(sender, instance, **kwargs):
                 z = Tags.objects.get(tag=tag.lower())
                 PostTags.objects.create(tag=z, post=post)
 
-    print(tags, "signals")
+
