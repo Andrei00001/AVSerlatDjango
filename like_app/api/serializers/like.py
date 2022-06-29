@@ -16,10 +16,6 @@ class LikesSerializer(serializers.ModelSerializer):
     )
 
 
-def get_count_likes(instance):
-    return instance.like_comment_user.count()
-
-
 class LikesCommentsSerializer(serializers.ModelSerializer):
     comment = CommentsSerializer()
 
@@ -27,7 +23,10 @@ class LikesCommentsSerializer(serializers.ModelSerializer):
         model = LikeComments
         fields = "comment", "count_likes"
 
-        count_likes = serializers.SerializerMethodField()
+    count_likes = serializers.SerializerMethodField()
+
+    def get_count_likes(self, instance):
+        return instance.like_comment_user.count()
 
     publisher_user = serializers.HiddenField(
         default=serializers.CurrentUserDefault(),
