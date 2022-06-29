@@ -10,7 +10,7 @@ class LikesViewSet(GenericViewSet, ListModelMixin, CreateModelMixin):
     queryset = Like.objects.all()
 
 
-class LikesCommentsViewSet(GenericViewSet, ListModelMixin, CreateModelMixin):
+class LikesCommentsViewSet(GenericViewSet, ListModelMixin,RetrieveModelMixin, CreateModelMixin):
     serializer_class = LikesCommentsSerializer
     queryset = LikeComments.objects.all()
     lookup_field = 'comment_id'
