@@ -9,4 +9,4 @@ class Logout_user(View):
 
     def post(self, request):
         logout(request)
-        return render(request, "login")
+        return redirect("login")
