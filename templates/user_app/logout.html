@@ -1,4 +1,8 @@
- <form method="post" action = "{% url 'login' %}">
+ <form method="post" id = "logout_form">
 
         {% csrf_token %}
 </form>
+
+ <script type="text/javascript">
+  document.getElementById('logout_form').submit();
+</script>
