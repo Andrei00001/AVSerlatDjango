@@ -8,7 +8,8 @@
 
                     {% csrf_token %}
             </form>
-
+    {% elif m.title != "Выйти" %}
+        <a href="{{ m.url }}">{{ m.title }}</a>
     {% endif %}
-    <a href="{{ m.url }}">{{ m.title }}</a>
+
 {% endfor%}
