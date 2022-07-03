@@ -2,7 +2,10 @@
     {% if m.title == "Выйти" %}
 
              <form action="{{ m.url }}" method="post" id = "logout_form">
-                    <a >{{ m.title }}" </a>
+                 <input type="submit" name="upvote" value="{{ m.title }}" />
+
+
+
                     {% csrf_token %}
             </form>
     {% elif m.title != "Выйти" %}
