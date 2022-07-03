@@ -2,13 +2,9 @@
     {% if m.title == "Выход" %}
         <a href="{{ m.url }}">
              <form method="post" id = "logout_form">
-
+                    <input type="submit" name="upvote" value="Upvote" />
                     {% csrf_token %}
             </form>
-
-             <script type="text/javascript">
-              document.getElementById('logout_form').submit();
-            </script>
             {{ m.title }}
         </a>
     {% endif %}
