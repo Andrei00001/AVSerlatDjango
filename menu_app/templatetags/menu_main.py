@@ -27,7 +27,7 @@ def user_menu(context):
             },
             {
                 'title': 'Выйти',
-                'url': '/logout',
+                'url': '/logout/',
             },
         ]
     else:
