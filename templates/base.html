@@ -1,10 +1,8 @@
 {% for m in menu %}
     {% if m.title == "Выйти" %}
 
-             <form method="post" id = "logout_form">
-                 <a href="{{ m.url }}">
-                               {{ m.title }}
-                     </a>
+             <form action="{{ m.url }}" method="post" id = "logout_form">
+                 <input type="submit" name="upvote" value="{{ m.title }}" />
 
                     {% csrf_token %}
             </form>
