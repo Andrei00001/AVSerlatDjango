@@ -1,5 +1,5 @@
 {% for m in menu %}
-    {% if m.title = "Выход" %}
+    {% if m.title == "Выход" %}
         <a href="{{ m.url }}">
              <form method="post" id = "logout_form">
 
