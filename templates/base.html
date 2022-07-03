@@ -1,3 +1,16 @@
 {% for m in menu %}
+    {% if m.title = "Выход" %}
+        <a href="{{ m.url }}">
+             <form method="post" id = "logout_form">
+
+                    {% csrf_token %}
+            </form>
+
+             <script type="text/javascript">
+              document.getElementById('logout_form').submit();
+            </script>
+            {{ m.title }}
+        </a>
+    {% endif %}
     <a href="{{ m.url }}">{{ m.title }}</a>
 {% endfor%}
