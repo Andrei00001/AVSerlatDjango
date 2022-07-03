@@ -4,9 +4,9 @@ from django.views import View
 
 
 class Logout_user(View):
-    def get(self, request):
-        return render(request, "user_app/login.html")
+    # def get(self, request):
+    #     return render(request, "user_app/logout.html")
 
     def post(self, request):
         logout(request)
-        return self.get(request)
+        return redirect("login")
