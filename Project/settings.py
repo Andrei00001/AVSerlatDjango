@@ -11,13 +11,12 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 from django.conf.global_settings import DATABASES
 from dotenv import load_dotenv
 import django_heroku
-
-
 
 load_dotenv()
 env_path = Path('.') / '.env'
@@ -59,6 +58,7 @@ INSTALLED_APPS = [
     'like_app',
     'people_app',
     'chat_app',
+
 ]
 AUTH_USER_MODEL = 'user_app.User'
 MIDDLEWARE = [
@@ -171,3 +171,19 @@ CELERY_CACHE_BACKEND = 'django-cache'
 
 # DATABASES['default'] = dj_database_url.config(default=os.getenv('DATABASE_URL'))
 django_heroku.settings(locals())
+
+sentry_sdk.init(
+    dsn="https://601fa7dead5a4273902934370e4bd190@o1305903.ingest.sentry.io/6547827",
+    integrations=[
+        DjangoIntegration(),
+    ],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
